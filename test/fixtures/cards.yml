@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  header: MyString
+  lines: MyText
+  blank: MyText
+  deck: one
+
+two:
+  header: MyString
+  lines: MyText
+  blank: MyText
+  deck: two

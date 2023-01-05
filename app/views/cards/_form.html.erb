@@ -1,0 +1,17 @@
+<%= form_with model: [ @deck, @deck.cards.build ] do |form| %>
+  <p>
+    <%= form.label :header %><br>
+    <%= form.text_field :header %>
+  </p>
+  <p>
+    <%= form.label :lines %><br>
+    <%= form.text_area :lines %>
+  </p>
+  <p>
+    <%= form.label :blank %><br>
+    <%= form.text_area :blank %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

@@ -1,0 +1,15 @@
+<h1><%= @deck.name %></h1>
+
+<ul>
+  <li><%= link_to "Edit", edit_deck_path(@deck) %></li>
+  <li><%= link_to "Destroy", deck_path(@deck), data: {
+        turbo_method: :delete,
+        turbo_confirmed: "Are you sure?"
+      }%></li>
+</ul>
+
+<h2>Cards</h2>
+<%= render @deck.cards %>
+
+<h2>Add a card:</h2>
+<%= render 'cards/form'%>

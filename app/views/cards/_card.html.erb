@@ -1,0 +1,21 @@
+<p>
+  <strong>Header:</strong>
+  <%= card.header %>
+</p>
+
+<p>
+  <strong>Lines:</strong>
+  <%= card.lines %>
+</p>
+
+<p>
+  <strong>Blank:</strong>
+  <%= card.blank %>
+</p>
+
+<p>
+    <%= link_to "Destroy Card", [card.deck, card], data: {
+                  turbo_method: :delete,
+                  turbo_confirm: "Are you sure?"
+                } %>
+  </p>
