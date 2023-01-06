@@ -1,0 +1,40 @@
+<%# comment line %>
+
+<% if false %>
+
+comment block
+comment block
+comment block
+comment block
+
+<% end %>
+
+<h1>StudyBuddy</h1>
+<p>
+Try I - Works if you add fa to front
+<i class="fa fa-brands fa-font-awesome"></i>
+<i class="fa fa-solid fa-user-secret"></i>
+<i class="fa fa-regular fa-bell"></i>
+</p>
+<p>
+Try II - Doesn't work
+<%= icon('fa-brands', 'font-awesome')%>
+<%= icon('fa-solid', 'user-secret')%>
+<%= icon('fa-regular', 'bell')%>
+</p>
+<p>
+Try III - Works
+<%= fa_icon "camera-retro"%>
+<%= fa_icon "home"%>
+<%= fa_icon "bell"%>
+</p>
+<p>
+Try IV - Works
+<%= fa_icon "font-awesome"%>
+<%= fa_icon "home"%>
+<%= fa_icon "bell"%>
+<i class="fa fa-solid fa-user-secret" aria-hidden="true"></i>
+<i class="fa fa-home" aria-hidden="true"></i>
+<%= fa_icon "chevron-right", text: "Get started", right: true%>
+<%= fa_icon "fa-solid fa-user-hair-buns" %>
+</p>
