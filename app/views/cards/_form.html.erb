@@ -1,15 +1,16 @@
-<%= form_with model: [ @deck, @deck.cards.build ] do |form| %>
+<% card ||= nil %>
+<%= form_with model: [ @deck, card || @deck.cards.build ] do |form| %>
   <p>
     <%= form.label :header %><br>
-    <%= form.text_field :header %>
+    <%= form.text_field :header, placeholder: "header for the lined side of a card" %>
   </p>
   <p>
     <%= form.label :lines %><br>
-    <%= form.text_area :lines %>
+    <%= form.text_area :lines, placeholder: "text for the lined side of a card" %>
   </p>
   <p>
     <%= form.label :blank %><br>
-    <%= form.text_area :blank %>
+    <%= form.text_area :blank, placeholder: "text for the blank side of a card" %>
   </p>
   <p>
     <%= form.submit %>

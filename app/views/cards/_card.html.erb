@@ -1,21 +1,31 @@
-<p>
-  <strong>Header:</strong>
-  <%= card.header %>
-</p>
+<ul>
+  <div class="container">
+        
+        <div class="card-group">
+         
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><%= card.header %></h5>
+              <p class="card-text mb-4"><%= card.lines %></p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text mb-4"><%= card.blank %></p>
+            </div>
+          </div>
 
-<p>
-  <strong>Lines:</strong>
-  <%= card.lines %>
-</p>
+        </div>
+    
+    <br>
 
-<p>
-  <strong>Blank:</strong>
-  <%= card.blank %>
-</p>
+    <%= link_to "Edit", edit_deck_card_path(@deck, card), class: "btn btn-primary" %>
 
-<p>
-    <%= link_to "Destroy Card", [card.deck, card], data: {
+    <%= link_to "Delete", [card.deck, card], data: {
                   turbo_method: :delete,
                   turbo_confirm: "Are you sure?"
-                } %>
-  </p>
+                }, class: "btn btn-danger" %>
+  
+  </div>
+  <br>
+</ul>

@@ -1,17 +1,19 @@
 <%= render 'components/header'%>
 
-<h1><%= @deck.name %></h1>
-
 <ul>
-  <li><%= link_to "Edit", edit_deck_path(@deck) %></li>
-  <li><%= link_to "Destroy", deck_path(@deck), data: {
-        turbo_method: :delete,
-        turbo_confirmed: "Are you sure?"
-      }%></li>
+  <h1>Deck: <%= @deck.name %>
+
+    <%= link_to "Edit", edit_deck_path(@deck), class: "btn btn-primary" %>
+    <%= link_to "Delete", deck_path(@deck), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure? This will delete all the cards in this deck."
+                  }, class: "btn btn-danger" %>
+    <%= link_to "Study!", edit_deck_path(@deck), class: "btn btn-info" %>
+  </h1>
+  <h2>Cards</h2>
+  <%= render @deck.cards %>
+
+  <h2>Add a card:</h2>
+  <%= render 'cards/form'%>
+
 </ul>
-
-<h2>Cards</h2>
-<%= render @deck.cards %>
-
-<h2>Add a card:</h2>
-<%= render 'cards/form'%>

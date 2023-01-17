@@ -1,14 +1,23 @@
 
 <%= render 'components/header'%>
 
-<h1>Decks</h1>
-
 <ul>
-  <% @decks.each do |deck| %>
-      <li>
-        <%= link_to deck.name, deck %>
-      </li>
-  <% end %>
-</ul>
+  <div class="container">
+    <table class="table table-striped">
+    <h1>Decks</h1>
+    <tbody>
+      <% @decks.each do |deck| %>
+      <tr class="row">
+        <td class="col">
+        <%= link_to deck.name, deck, class: "btn btn-info btn-sm" %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
 
-<%= link_to "New Deck", new_deck_path %>
+    </table>
+  </div>
+  <div class="container">
+    <%= link_to "New Deck", new_deck_path, class: "btn btn-success" %>
+  </div>
+</ul>
