@@ -1,3 +1,4 @@
+<!-- TODO: remove header/footer, move to template  html file -->
 <!doctype html>
 <html lang="en">
   <head>
@@ -11,7 +12,6 @@
     <title>Study Cards</title>
   </head>
   <body class="study_body">
-    <%= render 'components/header'%>
     <ul>
     <h1>Deck: <%= @deck.name %></h1>
 
@@ -20,6 +20,7 @@
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <% start_indicators = true %>
+    <!-- TODO: simplify -->
     <%for i in 0..@deck.cards.length-1 %>
       <% if i == 0 %>
         <% start_indicators = false %>

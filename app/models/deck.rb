@@ -1,5 +1,6 @@
 class Deck < ApplicationRecord
   has_many :cards, dependent: :destroy
+  has_many :results, dependent: :destroy
 
   #query shortcut
   scope :ordered_by_name, -> { order(name: :asc) }

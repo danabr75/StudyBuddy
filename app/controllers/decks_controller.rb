@@ -6,6 +6,9 @@ class DecksController < ApplicationController
   
   def show
     @deck = Deck.find(params[:id])
+    @cards = @deck.cards.paginate(page: params[:page], per_page: 3)
+    #@previous_results = @deck.results.where(user_id: @current_user&.id)
+
   end
 
   def new

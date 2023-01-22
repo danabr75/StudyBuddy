@@ -1,20 +1,21 @@
-<%= render 'components/header'%>
-  <body class="study_body">
-<ul>
-  <h1>Deck: <%= @deck.name %>
+<div class="study_body">
+  <div>
+    <h1>Deck: <%= @deck.name %>
 
-    <%= link_to "Edit", edit_deck_path(@deck), class: "btn btn-primary" %>
-    <%= link_to "Delete", deck_path(@deck), data: {
-                    turbo_method: :delete,
-                    turbo_confirm: "Are you sure? This will delete all the cards in this deck."
-                  }, class: "btn btn-danger" %>
-    <%= link_to "Study!", edit_deck_study_path(@deck), class: "btn btn-info" %>
-  </h1>
-  <h2>Cards</h2>
-  <%= render @deck.cards %>
+      <%= link_to "Edit", edit_deck_path(@deck), class: "btn btn-primary" %>
+      <%= link_to "Delete", deck_path(@deck), data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure? This will delete all the cards in this deck."
+                    }, class: "btn btn-danger" %>
+      <%= link_to "Study!", edit_deck_study_path(@deck), class: "btn btn-info" %>
+    </h1>
+    <h2>Cards</h2>
+    <%= render @cards %>
+    <%= will_paginate @cards %>
+  </div>
+  <div>
 
-  <h2>Add a card:</h2>
-  <%= render 'cards/form'%>
-
-</ul>
-</body>
+    <h2>Add a card:</h2>
+    <%= render 'cards/form'%>
+  </div>
+</div>

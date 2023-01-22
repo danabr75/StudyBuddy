@@ -12,7 +12,7 @@ export { application }
 window.studyCardFlip = function(button) {
   
   // TODO: Look into scoping w/ js
-  var card = $(".study-card")
+  var card = $(".study-card.active")
   if (card == undefined) {
     alert("Card not found.")
     return false
