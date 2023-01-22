@@ -1,0 +1,2 @@
+module StudysHelper
+end
