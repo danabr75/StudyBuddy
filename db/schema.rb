@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_22_195034) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_30_013337) do
+  create_table "card_results", force: :cascade do |t|
+    t.integer "result_id", null: false
+    t.integer "card_id", null: false
+    t.boolean "correct"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["card_id"], name: "index_card_results_on_card_id"
+    t.index ["result_id"], name: "index_card_results_on_result_id"
+  end
+
   create_table "cards", force: :cascade do |t|
     t.string "header"
     t.text "lines"
@@ -34,6 +44,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_22_195034) do
     t.index ["deck_id"], name: "index_results_on_deck_id"
   end
 
+  add_foreign_key "card_results", "cards"
+  add_foreign_key "card_results", "results"
   add_foreign_key "cards", "decks"
   add_foreign_key "results", "decks"
 end

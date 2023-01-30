@@ -5,5 +5,8 @@ Rails.application.routes.draw do
     resources :cards
     resources :studys
   end
+  resources :results do
+    resources :card_results
+  end
 
 end
