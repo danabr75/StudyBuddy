@@ -6,6 +6,8 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Can define system-wide variables on the config
+
 module Study
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
