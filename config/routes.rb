@@ -3,10 +3,8 @@ Rails.application.routes.draw do
   root "decks#index"
   resources :decks do
     resources :cards
-    resources :studys
+    resources :results do
+      #resources :card_results
+    end
   end
-  resources :results do
-    resources :card_results
-  end
-
 end
