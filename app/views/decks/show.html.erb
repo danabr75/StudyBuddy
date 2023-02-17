@@ -7,8 +7,13 @@
                       turbo_method: :delete,
                       turbo_confirm: "Are you sure? This will delete all the cards in this deck."
                     }, class: "btn btn-danger" %>
-      <%= link_to "Study!", edit_deck_study_path(@deck), class: "btn btn-info" %>
+      <%= link_to "Study!", edit_deck_result_path(@deck), class: "btn btn-info" %>
+      <!--
+      <=link_to "Study!", edit_deck_study_path(@deck), class: "btn btn-info" %>
+      -->
     </h1>
+    <h2>Results</h2>
+    <%#= TODO: Render paginated partial of results %>
     <h2>Cards</h2>
     <%= render @cards %>
     <%= will_paginate @cards %>

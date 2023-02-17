@@ -1,16 +1,15 @@
 class StudysController < ApplicationController
-  
-  def edit
-    @deck = Deck.find(params[:id])
-  end
+  # def edit
+  #   @deck = Deck.find(params[:id])
+  # end
 
-  def update
-    @deck = Deck.find(params[:id])
+  # def update
+  #   @deck = Deck.find(params[:id])
 
-    if @deck.update(deck_params)
-      redirect_to @deck
-    else
-      render :edit, status: :unprocessable_entity
-    end
-  end
+  #   if @deck.update(deck_params)
+  #     redirect_to @deck
+  #   else
+  #     render :edit, status: :unprocessable_entity
+  #   end
+  # end
 end

@@ -1,7 +1,6 @@
 <%= javascript_import_module_tag "controllers/studys" %>
 <div class="study_body">
   <h1>Deck: <%= @deck.name %></h1>
-  <% study_stats = Array.new(@deck.cards.length, 0)%>
   <div id="carouselExampleIndicators" class="carousel slide"data-interval="false" data-bs-interval="false" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <% @deck.cards.each_with_index do |card, index| %>
@@ -58,14 +57,17 @@
     <input id="score_corr" name="score" type="radio" value="Correct" /> Correct<br />
     <input id="score_incorr" name="score" type="radio" value="Incorrect" /> Incorrect<br/>
   </p>
-  <!-- Form storing card score (correct/incorrect) -->
+  <!-- Form storing results (correct/incorrect) -->
   <div class="">
     <!-- Recieved by: results_controller#create -->
-    <%= form_with(model: @deck.results.build, html: {id: "card_results_form"}) do |form| %>
-      <div class="visually-hidden">
+    <%= form_with(url: deck_results_path, model: @deck.results.build, html: {id: "card_results_form"}) do |form| %>
+      <div class="not-visually-hidden">
+        HERE
+        <%= @deck.cards.size%>
         <% @deck.cards.each do |card| %>
           <div id="cardResultForm<%= card.id %>">
-            <%= form.fields_for :card_results do |card_result_form| %>
+            Here <%= card.id %>
+            <%= form.fields_for(:card_results, form.object.card_results.build) do |card_result_form| %>
               <%= card_result_form.check_box :correct, "data-has-value-been-set": "false" %>
               <%= card_result_form.number_field :card_id, value: card.id %>
             <% end %>
