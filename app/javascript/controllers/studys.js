@@ -44,6 +44,30 @@ window.studyCardRecordResult = function(result) {
   }
 }
 
+// Checks if all of the flashcards has a recorded answer in order to enable the submit button
+window.hasAllAnswers = function(result) {
+    // Checks all of the form's checkboxes to see if all answers have been set.
+    // Excludes checking for the current slide because it is only triggered if a radio button has been selected, implying there is an answer for this question.
+    var currentSlide = $('div.active').index()
+    var allAnswered = true;
+    var l = $( "#card_results_form" + " input[type=checkbox]")
+    for (let i = 0; i < l.length; i++) {
+      if (i != currentSlide){
+        var answered = $( "#result_card_results_attributes_" + i + "_correct").data('has-value-been-set')
+        if (!answered) {
+          allAnswered = false;
+        }
+      }
+    }
+
+    if (allAnswered) {
+      console.log("::All Answered")
+      $( "#submitResult").prop('disabled', false)
+    } else {
+      console.log("::NOT All Answered")
+    }
+}
+
 // A $( document ).ready() block.
 $( document ).ready(function() {
     console.log( "ready!" );

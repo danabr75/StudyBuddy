@@ -54,14 +54,14 @@
   <button type="button" class="btn btn-info" onclick="studyCardFlip(this)">Flip</button>
   <p>
     <b>Score</b><br/>
-    <input id="score_corr" name="score" type="radio" value="Correct" /> Correct<br />
-    <input id="score_incorr" name="score" type="radio" value="Incorrect" /> Incorrect<br/>
+    <input id="score_corr" name="score" type="radio" value="Correct" onclick="hasAllAnswers(this)" /> Correct<br />
+    <input id="score_incorr" name="score" type="radio" value="Incorrect" onclick="hasAllAnswers(this)" /> Incorrect<br/>
   </p>
   <!-- Form storing results (correct/incorrect) -->
   <div class="">
     <!-- Recieved by: results_controller#create -->
     <%= form_with(url: deck_results_path, model: @deck.results.build, html: {id: "card_results_form"}) do |form| %>
-      <div class="not-visually-hidden">
+      <div class="visually-hidden">
         HERE
         <%= @deck.cards.size%>
         <% @deck.cards.each do |card| %>
@@ -79,7 +79,7 @@
         Disable submit button until all card result checkboxes have been filled/answers
         How to do start the page w/ the button disabled
         Have listener for each checkbox; That listener will check to see if all checkboxes have been checked. If that happens, disable the button. -->
-        <%= form.submit id: "submitResult", class: "btn btn-success" %>
+        <%= form.submit id: "submitResult", disabled: true, class: "btn btn-success" %>
       </p>
     <% end %>
   </div>
