@@ -10,9 +10,9 @@ class ResultsController < ApplicationController
   end
 
   # - Display from Studys Ex - Not updating db -
-  def edit
+  def new
     @deck = Deck.find(params[:deck_id])
-    @result = @deck.results.find(params[:id])
+    #@result = @deck.results.find(params[:id])
   end
 
   def update

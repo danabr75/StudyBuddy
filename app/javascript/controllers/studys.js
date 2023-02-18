@@ -44,8 +44,22 @@ window.studyCardRecordResult = function(result) {
   }
 }
 
+// TODO - On what element should you trigger page wide events
+window.scoreSelected = function(score_selected){
+  console.log("about to trigger score_selected event")
+  $( "body" ).trigger("score_selected")
+}
+
+$( document ).ready(function() {
+  $("body").on('score_selected', function () {
+    console.log("triggered score_selected event")
+    hasAllAnswers();
+  })
+});
+
+
 // Checks if all of the flashcards has a recorded answer in order to enable the submit button
-window.hasAllAnswers = function(result) {
+window.hasAllAnswers = function() {
     // Checks all of the form's checkboxes to see if all answers have been set.
     // Excludes checking for the current slide because it is only triggered if a radio button has been selected, implying there is an answer for this question.
     var currentSlide = $('div.active').index()
@@ -171,6 +185,6 @@ $( "#card_results_form" ).submit(function( event ) {
   // TODO - 3.) Prompt for unsaved data if any rerouting is attempted on study page
   // TODO - 4.) Prompt for unsaved data if any closing is attempted on study page
 
-  alert( "Handler for .submit() called." );
+  //alert( "Handler for .submit() called." );
   // event.preventDefault();
 });
