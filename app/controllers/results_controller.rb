@@ -49,6 +49,9 @@ class ResultsController < ApplicationController
   # TODO - Fix
   private
     def result_params
-      params.require(:result).permit(:correct)
+      #params.require(:person).permit(:name, :age, pets_attributes: [ :id, :name, :category ])
+
+      #  Parameters: {"authenticity_token"=>"[FILTERED]", "result"=>{"card_results_attributes"=>{"0"=>{"correct"=>"1", "card_id"=>"1"}, "1"=>{"correct"=>"0", "card_id"=>"2"}, "2"=>{"correct"=>"0", "card_id"=>"3"}, "3"=>{"correct"=>"0", "card_id"=>"7"}, "4"=>{"correct"=>"1", "card_id"=>"8"}, "5"=>{"correct"=>"1", "card_id"=>"9"}, "6"=>{"correct"=>"0", "card_id"=>"10"}}}, "commit"=>"Create Result", "deck_id"=>"1"}
+      params.require(:result).permit(:deck_id, card_results_attributes: [:card_id, :correct])
     end
 end

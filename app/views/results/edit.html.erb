@@ -67,7 +67,7 @@
         <% @deck.cards.each do |card| %>
           <div id="cardResultForm<%= card.id %>">
             Here <%= card.id %>
-            <%= form.fields_for :card_results do |card_result_form| %>
+            <%= form.fields_for(:card_results, form.object.card_results.build) do |card_result_form| %>
               <%= card_result_form.check_box :correct, "data-has-value-been-set": "false" %>
               <%= card_result_form.number_field :card_id, value: card.id %>
             <% end %>
