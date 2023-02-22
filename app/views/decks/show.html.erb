@@ -13,13 +13,23 @@
       -->
     </h1>
     <h2>Results</h2>
-    Result AVG: <%= @deck.results.card_result_average %>
+    <%= @deck.results.card_result_average %>
     <%#= TODO: Render paginated partial of results %>
     <%= render @results %>
 
     <h2>Cards</h2>
+
+<!-- Search does work, but doesn't specify the deck... -->
+    <h4> Search Cards: </h4>
+    <%= form_tag(deck_path, method: :get) do %>
+      <%= text_field_tag(:search, params[:search]) %>
+      <%= submit_tag ("Search") %>
+    <% end %>
+    <%= button_to "Clear Search", deck_path, method: :get %>
+
+
     <%= render @cards %>
-    <%= will_paginate @cards %>
+    <%#= will_paginate @cards %>
   </div>
   <div>
 

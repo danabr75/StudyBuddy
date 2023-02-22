@@ -181,9 +181,8 @@ $( "#card_results_form" ).submit(function( event ) {
   slideFnc();
 
   // TODO - 1.) Fix Loading Bug (loading in on page works, but weird cycling lag from other pages)
-  // TODO - 2.) Routing error on submit
-  // TODO - 3.) Prompt for unsaved data if any rerouting is attempted on study page
-  // TODO - 4.) Prompt for unsaved data if any closing is attempted on study page
+  // TODO - 2.) Prompt for unsaved data if any rerouting is attempted on study page
+  // TODO - 3.) Prompt for unsaved data if any closing is attempted on study page
 
   //alert( "Handler for .submit() called." );
   // event.preventDefault();

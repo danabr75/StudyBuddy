@@ -91,8 +91,20 @@ GEM
     crass (1.0.6)
     date (3.3.3)
     debug (1.7.1)
+    elastic-transport (8.2.0)
+      faraday (< 3)
+      multi_json
+    elasticsearch (8.6.0)
+      elastic-transport (~> 8)
+      elasticsearch-api (= 8.6.0)
+    elasticsearch-api (8.6.0)
+      multi_json
     erubi (1.12.0)
     execjs (2.8.1)
+    faraday (2.7.4)
+      faraday-net_http (>= 2.0, < 3.1)
+      ruby2_keywords (>= 0.0.4)
+    faraday-net_http (3.0.2)
     ffi (1.15.5)
     font-awesome-rails (4.7.0.8)
       railties (>= 3.2, < 8.0)
@@ -100,6 +112,7 @@ GEM
       sassc (~> 2.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    hashie (5.0.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.1.5)
@@ -127,6 +140,7 @@ GEM
     mini_portile2 (2.8.1)
     minitest (5.17.0)
     msgpack (1.6.0)
+    multi_json (1.15.0)
     net-imap (0.3.4)
       date
       net-protocol
@@ -140,6 +154,7 @@ GEM
     nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
+    pg (1.4.5)
     popper_js (2.11.6)
     public_suffix (5.0.1)
     puma (5.6.5)
@@ -177,6 +192,7 @@ GEM
     rake (13.0.6)
     regexp_parser (2.6.1)
     rexml (3.2.5)
+    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     sassc (2.4.0)
       ffi (~> 1.9)
@@ -186,6 +202,9 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    searchkick (5.2.0)
+      activemodel (>= 5.2)
+      hashie
     selenium-webdriver (4.7.1)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
@@ -197,8 +216,8 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.5.4)
-      mini_portile2 (~> 2.8.0)
+    sqlite3 (1.6.0-arm64-darwin)
+    sqlite3 (1.6.0-x86_64-linux)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
     thor (1.2.1)
@@ -237,14 +256,17 @@ DEPENDENCIES
   bootstrap (~> 5.2.2)
   capybara
   debug
+  elasticsearch
   font-awesome-rails
   font-awesome-sass (~> 6.2.1)
   importmap-rails
   jbuilder
   jquery-rails
+  pg
   puma (~> 5.0)
   rails (~> 7.0.4)
   sassc-rails
+  searchkick
   selenium-webdriver
   sprockets-rails
   sqlite3 (~> 1.4)
