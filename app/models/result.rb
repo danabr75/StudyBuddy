@@ -3,12 +3,11 @@ class Result < ApplicationRecord
   has_many :card_results, inverse_of: :result, dependent: :destroy
   accepts_nested_attributes_for :card_results
 
+  # Returns the overall average of a deck's results
   def self.card_result_average
     query = self.where({})
     ids = query.pluck(:id)
     card_results = CardResult.where(result_id: ids)
-
-
 
     card_results_correct = card_results.where(correct: true).count.to_f
     card_results_count = card_results.count.to_f
@@ -21,6 +20,7 @@ class Result < ApplicationRecord
     "Result Avg: #{card_results_percentage_correct.round(2) }%"
   end
 
+  # Returns the deck name, result id, and percentage correct (from card_results)
   def to_s
     card_results_correct = card_results.where(correct: true).count.to_f
     card_results_count = card_results.count.to_f

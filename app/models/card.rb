@@ -2,12 +2,13 @@ class Card < ApplicationRecord
   belongs_to :deck
   has_many :card_results, dependent: :destroy
 
-#Search does work, but doesn't specify the deck...
   def self.search(text)
+    # Converts Card class to ActiveRecord_Relation, in case it isn't already
+    # TODO - figure out why it won't work w/o the .where({})
     query = self.where({})
     if text
-      if query.where(header: text).or(query.where(lines: text)).or(query.where(blank: text))
-        query.where(header: text).or(query.where(lines: text)).or(query.where(blank: text))
+      if query.where("header LIKE ?", "%#{text}%").or(query.where("lines LIKE ?", "%#{text}%")).or(query.where("blank LIKE ?", "%#{text}%"))
+        query.where("header LIKE ?", "%#{text}%").or(query.where("lines LIKE ?", "%#{text}%")).or(query.where("blank LIKE ?", "%#{text}%"))
       else
         query
       end
