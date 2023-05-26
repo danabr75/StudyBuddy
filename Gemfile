@@ -17,6 +17,8 @@ gem "sqlite3", "~> 1.4"
 # PostgreSQL
 gem "pg"
 
+gem 'rubocop'
+
 # Searchkick
 gem "searchkick"
 gem "elasticsearch"

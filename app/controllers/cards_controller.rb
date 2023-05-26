@@ -29,7 +29,8 @@ class CardsController < ApplicationController
   end
 
   private
-    def card_params
-      params.require(:card).permit(:header, :lines, :blank, :search_cards)
-    end
+
+  def card_params
+    params.require(:card).permit(:header, :lines, :blank, :search_cards)
+  end
 end
