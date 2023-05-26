@@ -3,6 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.0"
 
+gem 'i18n', '~> 1.13'
+
 gem "will_paginate"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"

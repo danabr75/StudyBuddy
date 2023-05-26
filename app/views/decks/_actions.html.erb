@@ -1,0 +1,42 @@
+<% hide_until_parent_hover ||= false %>
+<% button_size ||= "btn-sm" %>
+
+
+<% link_dynamic_class_elements = [] %>
+<% link_dynamic_class_elements << button_size %>
+<% link_dynamic_class_elements << 'child-hide-until-hover-element' if hide_until_parent_hover %>
+
+<% link_dynamic_class_elements_string = link_dynamic_class_elements.join(' ') %>
+
+<div class="row">
+  <% unless controller_name == 'decks' && action_name == 'show' %>
+  <div class="col">
+    <%= link_to deck, class: "bi bi-arrow-right-square-fill btn btn-success " << link_dynamic_class_elements_string do %>
+      <br/>
+      <%= t('actions.show') %>
+    <% end %>
+  </div>
+  <% end %>
+  <div class="col">
+    <%= link_to edit_deck_path(deck), class: "bi bi-pencil btn btn-primary " << link_dynamic_class_elements_string do %>
+      </br>
+      <%= t('actions.edit') %>
+    <% end %>
+  </div>
+  <div class="col">
+    <%= link_to deck, class: "bi bi-trash btn btn-danger " << link_dynamic_class_elements_string, data: {
+        turbo_method: :delete,
+        turbo_confirm: "Are you sure?"
+      } do
+    %>
+      <br/>
+      <%= t('actions.delete') %>
+    <% end %>
+  </div>
+  <div class="col">
+    <%= link_to new_deck_result_path(deck), class: "bi bi-book-half btn btn-info " << link_dynamic_class_elements_string do %>
+      <br/>
+      <%= t('actions.study') %>
+    <% end %>
+  </div>
+</div>

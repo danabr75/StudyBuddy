@@ -1,19 +1,26 @@
 <div class="study_body">
   <div class="container">
+    <div class="row">
+
+      <h1 class="col">Decks</h1>
+      <div class="col pull-right">
+        <%= link_to "New Deck", new_deck_path, class: "btn btn-success pull-right" %>
+      </div>
+    </div>
     <table class="table table-striped">
-    <h1>Decks</h1>
-    <tbody>
-      <% @decks.each do |deck| %>
-      <tr class="row">
-        <td class="col">
-        <%= link_to deck.name, deck, class: "btn btn-info btn-sm" %>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-    </table>
-  </div>
-  <div class="container">
-    <%= link_to "New Deck", new_deck_path, class: "btn btn-success" %>
+      <tbody id="deck" data-controller="decks">
+        <% @decks.each do |deck| %>
+          <tr class="deck-row row parent-show-elements-if-hover-box" style="">
+            <td class="col">
+              <%= turbo_stream_from 'decks' %>
+              <%= render deck %>
+            </td>
+            <td class="col actions w-25">
+              <%= render partial: 'actions', locals: {deck: deck, hide_until_parent_hover: true} %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+      </table>
   </div>
 </div>

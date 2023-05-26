@@ -1,17 +1,18 @@
 <div class="study_body">
-  <div>
-    <h1>Deck: <%= @deck.name %>
+  <div class="container">
+      
+    <div class="row">
+      <div class="col">
+        <h1>Deck: <%= @deck.name %></h1>
+      </div>
+      <div class="col actions w-25">
+        <div class='pull-right'>
+          <%= render partial: 'actions', locals: {deck: @deck, button_size: 'btn-lg'} %>
+        </div>
+      </div>
+    </div>
 
-      <%= link_to "Edit", edit_deck_path(@deck), class: "btn btn-primary" %>
-      <%= link_to "Delete", deck_path(@deck), data: {
-                      turbo_method: :delete,
-                      turbo_confirm: "Are you sure? This will delete all the cards in this deck."
-                    }, class: "btn btn-danger" %>
-      <%= link_to "Study!", new_deck_result_path(@deck), class: "btn btn-info" %>
-      <!--
-      <=link_to "Study!", edit_deck_study_path(@deck), class: "btn btn-info" %>
-      -->
-    </h1>
+
     <h2>Results</h2>
     <%= @deck.results.card_result_average %>
     <%#= TODO: Render paginated partial of results %>
@@ -19,21 +20,22 @@
 
     <h2>Cards</h2>
 
-<!-- Search does work, but doesn't specify the deck... -->
-    <h4> Search Cards: </h4>
-    <%= form_tag(deck_path, method: :get) do %>
-      <%= text_field_tag(:search, params[:search]) %>
-      <%= submit_tag ("Search") %>
-    <% end %>
-    <%= button_to "Clear Search", deck_path, method: :get %>
+  <!-- Search does work, but doesn't specify the deck... -->
+      <h4> Search Cards: </h4>
+      <%= form_tag(deck_path, method: :get) do %>
+        <%= text_field_tag(:search, params[:search]) %>
+        <%= submit_tag ("Search") %>
+      <% end %>
+      <%= button_to "Clear Search", deck_path, method: :get %>
 
 
-    <%= render @cards %>
-    <%#= will_paginate @cards %>
-  </div>
-  <div>
+      <%= render @cards %>
+      <%#= will_paginate @cards %>
+    </div>
+    <div>
 
-    <h2>Add a card:</h2>
-    <%= render 'cards/form'%>
+      <h2>Add a card:</h2>
+      <%= render 'cards/form'%>
+    </div>
   </div>
 </div>

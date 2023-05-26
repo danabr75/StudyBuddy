@@ -1,6 +1,6 @@
 class DecksController < ApplicationController
   def index
-    @decks = Deck.all
+    @decks = Deck.paginate(page: params[:page], per_page: 30)
   end
 
   def show

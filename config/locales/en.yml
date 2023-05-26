@@ -30,4 +30,13 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  application:
+    name: StudyBuddy
+  actions:
+    show: View
+    edit: Edit
+    delete: Delete
+    study: Study!
+  deck:
+    name: Name
+

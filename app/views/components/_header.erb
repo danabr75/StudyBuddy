@@ -1,6 +1,6 @@
-<div class="header">
-	<%= link_to "StudyBuddy", root_path, class: "logo" %>
-	<div class="header-right">
-		<%= link_to "Decks", decks_path %>
-	</div>
+<div id="header" class="navbar-animation">
+	<%= link_to root_path, class: "logo" do %>
+		<i class="bi bi-pentagon-half"></i>
+		<%= t('application.name') %>
+	<% end %>
 </div>
