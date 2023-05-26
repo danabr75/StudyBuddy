@@ -93,11 +93,13 @@ a.logo {
   background-color: #0BAE42;
 }
 
-
 .child-hide-until-hover-element {
-  display: none;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .parent-show-elements-if-hover-box:hover .child-hide-until-hover-element {
   display: block;
+  opacity: 1;
 }

@@ -9,6 +9,10 @@ class ResultsController < ApplicationController
   # - Display from Studys Ex - Not updating db -
   def new
     @deck = Deck.find(params[:deck_id])
+    if @deck.cards.count == 0
+      redirect_to deck_path(@deck), alert: "No cards within deck to study!" and return
+    end
+    @cards = @deck.cards.order("RANDOM()")
     # @result = @deck.results.find(params[:id])
   end
 

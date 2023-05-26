@@ -34,6 +34,17 @@ class CardsController < ApplicationController
     redirect_to deck_path(@deck), status: :see_other
   end
 
+  def guess
+    @card = Card.find(params[:card_id])
+    guess = params[:guess]
+    guess_result = false
+    if guess&.strip&.downcase == @card.blank&.strip&.downcase
+      guess_result = true
+    end
+
+    render json: { success: guess_result }
+  end
+
   private
 
   def card_params

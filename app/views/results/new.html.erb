@@ -9,7 +9,7 @@
         <span class="visually-hidden">Previous</span>
       </button>
       <div class="carousel-indicators">
-        <% @deck.cards.each_with_index do |card, index| %>
+        <% @cards.each_with_index do |card, index| %>
           <button data-card-id="<%= card.id %>" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to=<%= index %>
             class="
               <%= index.zero? ? 'active' : '' %>
@@ -23,7 +23,7 @@
       </div>
       <!-- CARDS -->
       <div class="carousel-inner" style="margin-left: 20%; max-width: 60%;">
-        <% @deck.cards.each_with_index do |card, index| %>
+        <% @cards.each_with_index do |card, index| %>
           <div
             class="
               study-card
@@ -65,19 +65,45 @@
       </button>
       <br><br>
     </div>
-    <button type="button" class="btn btn-info" onclick="studyCardFlip(this)">Flip</button>
-    <p>
-      <b>Score</b><br/>
-      <input id="score_corr" name="score" type="radio" value="Correct" onclick="scoreSelected(this)" /> Correct<br />
-      <input id="score_incorr" name="score" type="radio" value="Incorrect" onclick="scoreSelected(this)" /> Incorrect<br/>
-    </p>
+
+    <!-- CENTER ACTIONS -->
+    <div class="form">
+      <div class="d-flex justify-content-center input-group">
+        <%= form_tag cards_guess_path, method: :post, class: "form-inline my-4", id: "guess_answer" do %>
+          <%= hidden_field_tag :card_id, "undefined" %>
+          <div class="input-group">
+            <%= text_field_tag :guess, nil, class: "form-control", placeholder: "Answer" %>
+            <div class="input-group-append d-flex">
+              <%= button_tag type: :submit, class: "btn btn-primary" do %>
+                Guess
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="d-flex justify-content-center">
+        <button id="flipper" style="width: 30%; min-width: 50px;" type="button" class="btn btn-info" onclick="studyCardFlip(this)">Flip</button>
+      </div>
+      <div class="d-flex justify-content-center input-group">
+        <label for="score_corr" class="form-check-label btn btn-secondary m-1">
+          <input id="score_corr" class="" name="score" type="radio" value="Correct" onclick="scoreSelected(this)" />
+          Correct
+        </label>
+        <label for="score_incorr" class="form-check-label btn btn-secondary m-1">
+          <input id="score_incorr" class="" name="score" type="radio" value="Incorrect" onclick="scoreSelected(this)" />
+          Incorrect
+        </label>
+      </div>
+    </div>
+
+    <hr class="my-4"/>
     <!-- Form storing results (correct/incorrect) -->
-    <div class="">
+    <div class="d-flex justify-content-center">
       <!-- Recieved by: results_controller#create -->
       <%= form_with(url: deck_results_path, model: @deck.results.build, html: {id: "card_results_form"}) do |form| %>
         <div class="visually-hidden">
-          <%= @deck.cards.size%>
-          <% @deck.cards.each do |card| %>
+          <%= @cards.size %>
+          <% @cards.each do |card| %>
             <div id="cardResultForm<%= card.id %>">
               <%= form.fields_for(:card_results, form.object.card_results.build) do |card_result_form| %>
                 <%= card_result_form.check_box :correct, "data-has-value-been-set": "false" %>

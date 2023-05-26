@@ -7,4 +7,6 @@ Rails.application.routes.draw do
       #resources :card_results
     end
   end
+
+  match '/cards/guess', to: 'cards#guess', via: [:post]
 end

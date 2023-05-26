@@ -51,8 +51,17 @@ window.scoreSelected = function(score_selected){
   var card = getVerifiedCard()
   var card_id = card.data('id')
   var carousel_indicators_element = $("[data-card-id='" + card_id + "']");
-  carousel_indicators_element.addClass('btn')
-  carousel_indicators_element.addClass('btn-info')
+  
+  // RESET CSS for indicator
+  carousel_indicators_element.removeClass('bg-danger')
+  carousel_indicators_element.removeClass('bg-success')
+
+  if ($("#score_incorr").prop('checked') == true) {
+    carousel_indicators_element.addClass('bg-danger')
+  } else {
+    carousel_indicators_element.addClass('bg-success')
+  }
+
   $( "body" ).trigger("score_selected")
 }
 
@@ -143,6 +152,8 @@ myCarousel.addEventListener('slid.bs.carousel', function () {
 })
 
 window.slideFnc = function() {
+  $("input#guess").val('')
+
   // Reference to the card
   var card = getVerifiedCard()
   if (card == null) {
@@ -193,4 +204,39 @@ $( "#card_results_form" ).submit(function( event ) {
 
   //alert( "Handler for .submit() called." );
   // event.preventDefault();
+});
+
+
+$(document).on('submit', '#guess_answer', function(event) {
+  event.preventDefault(); // Prevent the default form submission
+  name="card_id"
+
+  var card = getVerifiedCard()
+  var card_id = card.data('id')
+  // Update guess form with correct card ID.
+  var card_id_input = $("input[name='card_id']");
+  card_id_input.val(card_id)
+
+  $.ajax({
+    url: '/cards/guess',
+    method: 'POST', // or 'GET' depending on your form's method
+    data: $(this).serialize(), // Serialize the form data
+    success: function(response) {
+      // Handle the response from the server
+      var radio_input = undefined;
+      if (response.success == true) {
+        radio_input = $("#score_corr");
+      } else {
+        radio_input = $("#score_incorr");
+      }
+      // Both are necessary, to trigger events and to set value in HTML form
+      radio_input.prop('checked', true);
+      radio_input.click();
+    },
+    error: function(xhr) {
+      // Handle errors, if any
+      console.log("ERROR! /cards/guess GET failed")
+      console.log(xhr)
+    }
+  });
 });
