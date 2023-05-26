@@ -1,0 +1,7 @@
+<div class="study_body">
+  <div class="container">
+    <h1><%= t('actions.create')%> <%= t('card.class') %></h1>
+    <%= render "form", card: @card %>
+    <%= link_to "Back", deck_path(@card.deck), class: "btn btn-primary" %>
+  </div>
+</div>
