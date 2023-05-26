@@ -34,9 +34,29 @@ en:
     name: StudyBuddy
   actions:
     show: View
+    create: Create
+    new: New
     edit: Edit
     delete: Delete
     study: Study!
+    cancel: Cancel
+  # For submit buttons for those actions
+  action_submit_names:
+    create: Create
+    new: Create
+    edit: Update
+    delete: Delete
   deck:
+    class: Deck
     name: Name
+  card:
+    class: Card
+    front: FRONT
+    back: BACK
+    header: Header
+    header_placeholder: header for the lined side of a card
+    lines: Lines
+    lines_placeholder: text for the lined side of a card
+    blank: Blank
+    blank_placeholder: text for the blank side of a card
 

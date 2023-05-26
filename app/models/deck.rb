@@ -15,8 +15,14 @@ class Deck < ApplicationRecord
 
   validates :name, presence: true
 
-  #def initialize *args
-    #super *args
-    #self.title = "title not found"
-  #end
+  def self.search(text)
+    # Converts Card class to ActiveRecord_Relation, in case it isn't already
+    # TODO - figure out why it won't work w/o the .where({})
+    query = self.where({})
+    if text
+      query.where("name LIKE ?", "%#{text}%")
+    else
+      query
+    end
+  end
 end

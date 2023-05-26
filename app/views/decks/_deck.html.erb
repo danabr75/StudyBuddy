@@ -11,7 +11,7 @@
     </div>
     <% if editable %>
       <div class="form-group mb-3">
-        <%= form.submit nil, class: 'btn btn-success' %>
+        <%= form.submit t("action_submit_names.#{action_name}") + ' ' + t('deck.class'), class: 'btn btn-success' %>
       </div>
     <% end %>
   <% end %>

@@ -1,18 +1,23 @@
 <% card ||= nil %>
-<%= form_with model: [ @deck, card || @deck.cards.build ] do |form| %>
-  <p>
-    <%= form.label :header %><br>
-    <%= form.text_field :header, placeholder: "header for the lined side of a card" %>
+<%= form_with model: [ @deck, card || @deck.cards.build ], class: 'form' do |form| %>
+  <p class="form-group mb-3">
+    <%= form.label :header, t('card.header'), class: "form-label" %><br>
+    <%= form.text_field :header, placeholder: t('card.header_placeholder'), class: "form-control" %>
   </p>
-  <p>
-    <%= form.label :lines %><br>
-    <%= form.text_area :lines, placeholder: "text for the lined side of a card" %>
+  <p class="form-group mb-3">
+    <%= form.label :lines, t('card.lines'), class: "form-label" %><br>
+    <%= form.text_area :lines, placeholder: t('card.lines_placeholder'), class: "form-control" %>
   </p>
-  <p>
-    <%= form.label :blank %><br>
-    <%= form.text_area :blank, placeholder: "text for the blank side of a card" %>
+  <p class="form-group mb-3">
+    <%= form.label :blank, t('card.blank'), class: "form-label" %><br>
+    <%= form.text_area :blank, placeholder: t('card.blank_placeholder'), class: "form-control" %>
   </p>
-  <p>
-    <%= form.submit %>
+  <p class="form-group mb-3">
+    <%=
+      form.submit(
+        t("action_submit_names.#{action_name}") + ' ' + t('card.class'),
+        class: 'btn btn-success'
+      )
+    %>
   </p>
 <% end %>

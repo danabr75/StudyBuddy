@@ -1,12 +1,29 @@
 <div class="study_body">
   <div class="container">
-    <div class="row">
-
-      <h1 class="col">Decks</h1>
-      <div class="col pull-right">
+    <div class="d-flex align-items-center">
+      <div class="mx-2">
+        <h1>Decks</h1>
+      </div>
+      <div class="mx-2 pull-right">
+        <%= form_tag decks_path, method: :get, class: "form-inline my-4" do %>
+          <div class="input-group">
+            <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Search..." %>
+            <div class="input-group-append d-flex">
+              <%= button_tag type: :submit, class: "btn btn-primary" do %>
+                <i class="bi bi-search"></i>
+              <% end %>
+              <div class="input-group-append">
+                <%= link_to "x", decks_path, class: "btn btn-danger " << (params[:search].present? ? '' : 'disabled') %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="mx-2 pull-right">
         <%= link_to "New Deck", new_deck_path, class: "btn btn-success pull-right" %>
       </div>
     </div>
+    <%= will_paginate @decks, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
     <table class="table table-striped">
       <tbody id="deck" data-controller="decks">
         <% @decks.each do |deck| %>
@@ -20,7 +37,11 @@
             </td>
           </tr>
         <% end %>
+
       </tbody>
       </table>
+      <div class="pagination justify-content-center">
+        <%= will_paginate @decks, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+      </div>
   </div>
 </div>

@@ -1,8 +1,6 @@
 class ResultsController < ApplicationController
   # - Mimic updating Card in db -
   def create
-    puts "HereIAm"
-    puts params.inspect
     @deck = Deck.find(params[:deck_id])
     @result = @deck.results.create(result_params)
     redirect_to deck_path(@deck)

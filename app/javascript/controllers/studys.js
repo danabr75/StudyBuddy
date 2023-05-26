@@ -47,19 +47,26 @@ window.studyCardRecordResult = function(result) {
 // TODO - On what element should you trigger page wide events
 window.scoreSelected = function(score_selected){
   console.log("about to trigger score_selected event")
+  console.log(score_selected)
+  var card = getVerifiedCard()
+  var card_id = card.data('id')
+  var carousel_indicators_element = $("[data-card-id='" + card_id + "']");
+  carousel_indicators_element.addClass('btn')
+  carousel_indicators_element.addClass('btn-info')
   $( "body" ).trigger("score_selected")
 }
 
 $( document ).ready(function() {
   $("body").on('score_selected', function () {
     console.log("triggered score_selected event")
-    hasAllAnswers();
+    console.log(this)
+    hasAllAnswersCheck();
   })
 });
 
 
 // Checks if all of the flashcards has a recorded answer in order to enable the submit button
-window.hasAllAnswers = function() {
+window.hasAllAnswersCheck = function() {
     // Checks all of the form's checkboxes to see if all answers have been set.
     // Excludes checking for the current slide because it is only triggered if a radio button has been selected, implying there is an answer for this question.
     var currentSlide = $('div.active').index()

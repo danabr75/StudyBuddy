@@ -1,4 +1,10 @@
 class CardsController < ApplicationController
+  def new
+    @deck = Deck.find(params[:deck_id])
+    @card = @deck.cards.new
+    @card.assign_attributes(card_params) if params[:card].present?
+  end
+
   def create
     @deck = Deck.find(params[:deck_id])
     @card = @deck.cards.create(card_params)

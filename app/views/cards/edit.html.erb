@@ -1,2 +1,7 @@
-<h1>Edit Card</h1>
-<%= render "form", card: @card %>
+<div class="study_body">
+  <div class="container">
+    <h1><%= t('actions.edit')%> <%= t('card.class') %></h1>
+    <%= render "form", card: @card %>
+    <%= link_to "Back", deck_path(@card.deck), class: "btn btn-primary" %>
+  </div>
+</div>

@@ -1,13 +1,14 @@
 class DecksController < ApplicationController
   def index
     @decks = Deck.paginate(page: params[:page], per_page: 30)
+    @decks = @decks.search(params[:search]) if params[:search].present?
+    @decks
   end
 
   def show
     @deck = Deck.find(params[:id])
-    # Search does work, but doesn't specify the deck...
-    @cards = @deck.cards.search(params[:search])
-    # @cards = @deck.cards.paginate(page: params[:page], per_page: 3)
+    @cards = @deck.cards.search(params[:card_search])
+    @cards = @cards.paginate(page: params[:page], per_page: 3)
     @results = @deck.results
     # @previous_results = @deck.results.where(user_id: @current_user&.id)
   end

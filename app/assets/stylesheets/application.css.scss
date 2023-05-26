@@ -16,6 +16,11 @@
 @import "font-awesome.css";
 @import "bootstrap";
 
+#carouselExampleIndicators, .study-card, .card, .card-body {
+  min-height: 45vh;
+}
+
+
 .no-click {
   pointer-events: none;
   cursor: not-allowed;
@@ -76,7 +81,8 @@ a.logo {
 }
 
 .study_body {
- background-color: #43CDD0;
+  background-color: #f4f6f9;
+  background-image: linear-gradient(to bottom, #f4f6f9, #dfe4ea);
 }
 
 .btn.btn-info {

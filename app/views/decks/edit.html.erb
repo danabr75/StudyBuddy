@@ -1,6 +1,6 @@
 <div class="study_body">
   <div class="container">
-    <h1>Edit Deck</h1>
+    <h1><%= t('actions.edit')%> <%= t('deck.class') %></h1>
     <%= render partial: 'deck', locals: {editable: true, deck: @deck} %>
     <%= link_to "Back", deck_path(@deck), class: "btn btn-primary" %>
   </div>

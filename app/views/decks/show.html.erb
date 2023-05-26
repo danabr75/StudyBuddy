@@ -12,30 +12,47 @@
       </div>
     </div>
 
-
-    <h2>Results</h2>
-    <%= @deck.results.card_result_average %>
-    <%#= TODO: Render paginated partial of results %>
-    <%= render @results %>
-
-    <h2>Cards</h2>
-
-  <!-- Search does work, but doesn't specify the deck... -->
-      <h4> Search Cards: </h4>
-      <%= form_tag(deck_path, method: :get) do %>
-        <%= text_field_tag(:search, params[:search]) %>
-        <%= submit_tag ("Search") %>
-      <% end %>
-      <%= button_to "Clear Search", deck_path, method: :get %>
+    <h4>
+      Total Average: <%= @deck.results.card_result_average %>
+    </h4>
 
 
-      <%= render @cards %>
-      <%#= will_paginate @cards %>
+    <h4>Last 8 results: (8's average: <%= @results.last_8.card_result_average %>)</h4>
+    <ul>
+    <% @results.last_8.created_at_asc.each_with_index do |result, index| %>
+      <li><%= index + 1 %>: <%= result.to_h %> Correct</li>
+    <% end %>
+    <ul>
+    <div class="d-flex align-items-center">
+      <div class="mx-2">
+        <h2>Cards</h2>
+      </div>
+      <div class="mx-2 pull-right">
+        <%= form_tag deck_path, method: :get, class: "form-inline my-4" do %>
+          <div class="input-group">
+            <%= text_field_tag :card_search, params[:card_search], class: "form-control", placeholder: "Search..." %>
+            <div class="input-group-append d-flex">
+              <%= button_tag type: :submit, class: "btn btn-primary" do %>
+                <i class="bi bi-search"></i>
+              <% end %>
+              <div class="input-group-append">
+                <%= link_to "x", deck_path, class: "btn btn-danger " << (params[:card_search].present? ? '' : 'disabled') %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="mx-2 pull-right">
+        <%= link_to t("actions.new") + ' ' + t('card.class'), new_deck_card_path(@deck), class: "btn btn-success pull-right" %>
+      </div>
     </div>
-    <div>
 
-      <h2>Add a card:</h2>
-      <%= render 'cards/form'%>
-    </div>
+
+    <%= will_paginate @cards, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+    <%= render @cards %>
+    <%= will_paginate @cards, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+
+    <!-- <h2>Add a card:</h2> -->
+    <%#= render 'cards/form'%>
   </div>
 </div>

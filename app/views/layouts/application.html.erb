@@ -1,3 +1,4 @@
+<% require 'open-uri' %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,6 +20,9 @@
     <%= javascript_importmap_tags %>
     <%= yield :head %>
     <%= stylesheet_link_tag 'decks', media: 'all' if controller_name == 'decks' %>
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,<%= Base64.strict_encode64(URI.open('https://icons.getbootstrap.com/assets/icons/pentagon-half.svg').read) %>" sizes="any">
+
   </head>
   <%= render 'components/header'%>
   <body>

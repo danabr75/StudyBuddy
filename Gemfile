@@ -6,6 +6,7 @@ ruby "3.2.0"
 gem 'i18n', '~> 1.13'
 
 gem "will_paginate"
+gem 'will_paginate-bootstrap-style'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4"

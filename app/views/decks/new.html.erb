@@ -1,6 +1,7 @@
 <div class="study_body">
   <div class="container">
-    <h1>New Deck</h1>
+    <h1><%= t('actions.new') %> <%= t('deck.class') %></h1>
+    <%= t('application.name') %>
     <%= render partial: 'deck', locals: {editable: true, deck: @deck} %>
   </div>
   <%= link_to "Back", decks_path, class: "btn btn-primary" %>
