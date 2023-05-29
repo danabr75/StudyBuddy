@@ -5,15 +5,15 @@
         <h1>Decks</h1>
       </div>
       <div class="mx-2 pull-right">
-        <%= form_tag decks_path, method: :get, class: "form-inline my-4" do %>
+        <%= form_tag(decks_path, method: :get, class: "form-inline my-4", data: { turbo_frame: 'deck_index_and_search' }) do %>
           <div class="input-group">
             <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Search..." %>
             <div class="input-group-append d-flex">
-              <%= button_tag type: :submit, class: "btn btn-primary" do %>
-                <i class="bi bi-search"></i>
+              <%= button_tag type: :submit, class: "btn btn-primary loading-disable" do %>
+                <i class="bi bi-search loading-disable"></i>
               <% end %>
               <div class="input-group-append">
-                <%= link_to "x", decks_path, class: "btn btn-danger " << (params[:search].present? ? '' : 'disabled') %>
+                <%= link_to 'x', decks_path, class: "btn btn-danger", data: { turbo_frame: 'deck_index_and_search' }, onclick: "$('#search').val('')" %>
               </div>
             </div>
           </div>
@@ -23,25 +23,25 @@
         <%= link_to t('actions.new') + ' ' + t('deck.class'), new_deck_path, class: "btn btn-success pull-right #{'disabled' unless can?(:create, Deck)}" %>
       </div>
     </div>
-    <%= will_paginate @decks, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
-    <table class="table table-striped">
-      <tbody id="deck" data-controller="decks">
-        <% @decks.each do |deck| %>
-          <tr class="deck-row row parent-show-elements-if-hover-box" style="">
-            <td class="col">
-              <%= turbo_stream_from 'decks' %>
-              <%= render deck %>
-            </td>
-            <td class="col actions w-25">
-              <%= render partial: 'actions', locals: {deck: deck, hide_until_parent_hover: true} %>
-            </td>
-          </tr>
-        <% end %>
-
-      </tbody>
+    <%= turbo_frame_tag 'deck_index_and_search' do %>
+      <%= will_paginate @decks, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+      <table class="table table-striped">
+        <tbody id="deck" data-controller="decks">
+          <% @decks.each do |deck| %>
+            <tr class="deck-row row parent-show-elements-if-hover-box" style="">
+              <td class="col">
+                <%= render deck %>
+              </td>
+              <td class="col actions w-25">
+                <%= render partial: 'actions', locals: {deck: deck, hide_until_parent_hover: true} %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
       </table>
       <div class="pagination justify-content-center">
         <%= will_paginate @decks, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
       </div>
+    <% end %>
   </div>
 </div>

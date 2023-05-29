@@ -13,7 +13,6 @@ class CardsController < ResourcesController
     begin
       @resources ||= @resource_class
       @resources = @resources.accessible_by(current_ability)
-      update_debug_api("#{@resource_class.name}.accessible_by(User.find(#{current_user.id}).ability)")
     rescue CanCan::Error
       # The accessible_by call cannot be used with a block 'can' definition
       # Need to switch over to SQL permissions, not using the blocks

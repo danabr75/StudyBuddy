@@ -1,4 +1,4 @@
-<%= javascript_import_module_tag "controllers/studys" %>
+<%= javascript_import_module_tag "controllers/results" %>
 <div class="study_body">
   <div class="container">
     <h1>Deck: <%= @deck.name %></h1>
@@ -26,6 +26,7 @@
         <% @cards.each_with_index do |card, index| %>
           <div
             class="
+              flipper
               study-card
               carousel-item
               <%= index.zero? ? 'active' : '' %>
@@ -45,7 +46,7 @@
               </div>
             </div>
             <!-- back of card -->
-            <div class="card visually-hidden card-back">
+            <div class="card card-back">
               <div class="card-body">
                 <div class="d-flex justify-content-center">
                   <p class="font-weight-bold btn btn-secondary btn-sm no-click w-24">
@@ -120,8 +121,7 @@
           <%= form.submit id: "submitResult", disabled: true, class: "btn btn-success" %>
           <%=
             link_to t('actions.cancel'), deck_path(@deck), class: "btn btn-danger", data: {
-              turbo_method: :delete,
-              turbo_confirm: "Are you sure?"
+              confirm: "Are you sure?"
             }
           %>
         </p>

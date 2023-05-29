@@ -1,21 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
-console.log("decks_controller.js")
+import { Turbo } from '@hotwired/turbo-rails';
 
 export default class extends Controller {
-  static targets = ["deck"]
-
   connect() {
-    this.element.addEventListener("ajax:success", this.handleSuccess)
+    console.log("Deck controller connected")
   }
 
-  disconnect() {
-    this.element.removeEventListener("ajax:success", this.handleSuccess)
+  update(event) {
+    // Handle the Turbo Stream update here
   }
 
-  handleSuccess = (event) => {
-    const [data, _status, xhr] = event.detail
-    const comment = xhr.response
-
-    this.commentTarget.insertAdjacentHTML("beforeend", comment)
-  }
 }

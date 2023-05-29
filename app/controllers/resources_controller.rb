@@ -1,15 +1,15 @@
 class ResourcesController < ApplicationController
   before_action :initialize_resource_class
-  before_action :check_cancancan_class_permissions
+  # before_action :check_cancancan_class_permissions
 
   private
 
-  def check_cancancan_class_permissions
-    unless can?(action_name&.to_sym, @resource_class)
-      Rails.logger.warn("CanCanCan Permissions redirect. Invalid Access of #{controller_name}##{action_name}, class: #{@resource_class} for user IP #{request.ip} and ID #{current_user&.id}")
-      redirect_to root_path, alert: "Invalid Permissions!" and return
-    end
-  end
+  # def check_cancancan_class_permissions
+  #   unless can?(action_name&.to_sym, @resource_class)
+  #     Rails.logger.warn("CanCanCan Permissions redirect. Invalid Access of #{controller_name}##{action_name}, class: #{@resource_class} for user IP #{request.ip} and ID #{current_user&.id}")
+  #     redirect_to root_path, alert: "Invalid Permissions!" and return
+  #   end
+  # end
 
   def initialize_resource_class
     # First priority is the namespaced model, e.g. User::Group

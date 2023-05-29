@@ -1,4 +1,3 @@
-console.log("start of javascript imports")
 import "jquery"
 import "jquery_ujs"
 
@@ -10,4 +9,3 @@ import "controllers"
 //= require jquery
 //= require popper
 //= require bootstrap-sprockets
-console.log("end of javascript imports")

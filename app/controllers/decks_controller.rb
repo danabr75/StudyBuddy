@@ -1,8 +1,31 @@
 class DecksController < ResourcesController
+  respond_to :html, :turbo_stream
+
+  # def index
+  #   @decks = Deck.accessible_by(current_ability)
+  #   puts "#{@decks.class}"
+  #   @decks = @decks.search(params[:search]) if params.key?(:search)
+  #   # @decks = @decks.search(params[:search]) if params[:search].present?
+  #   @decks = @decks.paginate(page: params[:page], per_page: 30)
+  #   respond_to do |format|
+  #     format.turbo_stream do
+  #       render turbo_stream: turbo_stream.replace('decks', partial: "decks/deck", collection: @decks)
+  #     end
+  #     format.html { render :index }
+  #   end
+  # end
+
+
   def index
-    @decks = Deck.paginate(page: params[:page], per_page: 30)
-    @decks = @decks.search(params[:search]) if params[:search].present?
-    @decks
+    @decks = Deck.accessible_by(current_ability)
+    puts "#{@decks.class}"
+    @decks = @decks.search(params[:search]) if params.key?(:search)
+    # @decks = @decks.search(params[:search]) if params[:search].present?
+    @decks = @decks.paginate(page: params[:page], per_page: 30)
+    respond_to do |format|
+      format.html {puts('HTML render')}
+      format.turbo_stream {puts "TURBO RENDER"}
+    end
   end
 
   def show

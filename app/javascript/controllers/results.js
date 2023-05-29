@@ -18,20 +18,20 @@ window.getVerifiedCard = function() {
 
 /**
  * Flip the card view from front to back or back to front.
- * @param {HTMLElement} button - Button triggering the flip.
  * @returns {boolean} - Returns false if card is not found, otherwise true.
  */
-window.studyCardFlip = function(button) {
-  const card = getVerifiedCard();
-  if (card === null){
-    return false;
-  }
-  const visible_part = card.find(".card:not(.visually-hidden)");
-  const invisible_part = card.find(".card.visually-hidden");
-  visible_part.addClass("visually-hidden");
-  invisible_part.removeClass("visually-hidden");
+window.studyCardFlip = function() {
+  $('.flipper').toggleClass('flipped');
+  // .card-front will have 'flipped-over' class if no longer 'on top'
+  // - will let us know to reset it before we carousel-navigate elsewhere.
+  $('.card-front').toggleClass('flipped-over');
   console.log('flipped');
-  return true;
+};
+window.resetCardFlip = function() {
+  if ($('.card-front').hasClass('flipped-over')) {
+    // console.log("Card was flipped, resetting")
+    studyCardFlip();
+  }
 };
 
 /**
@@ -108,6 +108,7 @@ window.slideFnc = function() {
   $("input#guess").val('');
   $(CORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR).prop("checked", false);
   $(INCORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR).prop("checked", false);
+  resetCardFlip();
 }
 
 /**
@@ -142,6 +143,7 @@ window.saveCardResultToHTMLForm = function() {
  */
 $(document).on('submit', '#guess_answer', function(event) {
   event.preventDefault();
+  $(".loading-disable").addClass('loading-disabled');
   const card = getVerifiedCard();
   const card_id = card.data('id');
   $("input[name='card_id']").val(card_id);
@@ -150,13 +152,24 @@ $(document).on('submit', '#guess_answer', function(event) {
     url: '/cards/guess',
     method: 'POST',
     data: $(this).serialize(),
-    success: function(response) {
+    success: function(response) { 
       const radio_input = response.success ? $(CORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR) : $(INCORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR);
+      if (response.success) {
+        createAlert('success', 'Correct!');
+        console.log('Correct!');
+      } else {
+        createAlert('danger', 'Incorrect!');
+        console.log('Incorrect!');
+      }
       radio_input.prop('checked', true).click();
     },
     error: function(xhr) {
       console.log("ERROR! /cards/guess GET failed");
       console.log(xhr);
+    },
+    complete: function(xhr, status) {
+      // Code to run regardless of success or error
+      $(".loading-disable").removeClass('loading-disabled');
     }
   });
 });

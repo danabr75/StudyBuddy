@@ -1,20 +1,21 @@
-<% editable ||= false %>
-<div class="deck" data-target="decks.deck">
-  <%= form_with model: deck, class: 'form' do |form| %>
-    <div class="<%= 'form-group mb-3' if editable %>">
-      <%= form.text_field :name, readonly: !editable, placeholder: t('deck.name'), class: "w-100 " << (editable ? "form-control" : "btn btn-info btn-no-hover no-click") %>
-      <% deck.errors.full_messages_for(:name).each do |message| %>
-        <div>
-          <%= message %>
+<!-- app/views/decks/_deck.html.erb -->
+<%= turbo_frame_tag dom_id(deck) do %>
+  <% editable ||= false %>
+  <div class="deck" data-target="decks.deck">
+    <%= form_with model: deck, class: 'form' do |form| %>
+      <div class="<%= 'form-group mb-3' if editable %>">
+        <%= form.text_field :name, readonly: !editable, placeholder: t('deck.name'), class: "w-100 " << (editable ? "form-control" : "btn btn-info btn-no-hover no-click") %>
+        <% deck.errors.full_messages_for(:name).each do |message| %>
+          <div>
+            <%= message %>
+          </div>
+        <% end %>
+      </div>
+      <% if editable %>
+        <div class="form-group mb-3">
+          <%= form.submit t("action_submit_names.#{action_name}") + ' ' + t('deck.class'), class: 'btn btn-success' %>
         </div>
       <% end %>
-    </div>
-    <% if editable %>
-      <div class="form-group mb-3">
-        <%= form.submit t("action_submit_names.#{action_name}") + ' ' + t('deck.class'), class: 'btn btn-success' %>
-      </div>
     <% end %>
-  <% end %>
-
-</div>
-
+  </div>
+<% end %>

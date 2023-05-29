@@ -16,6 +16,13 @@
 @import "font-awesome.css";
 @import "bootstrap";
 
+#pinnedToScreenAlertContainer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
 .loading-disabled:not(.no-loading-spinner) {
   position: relative;
   pointer-events: none;
@@ -56,12 +63,6 @@
 
 @keyframes spinner {
   to { transform: rotate(1turn); }
-}
-
-
-
-#carouselExampleIndicators, .study-card, .card, .card-body {
-  min-height: 45vh;
 }
 
 .no-click {
