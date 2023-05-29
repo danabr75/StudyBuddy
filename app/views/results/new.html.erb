@@ -4,7 +4,7 @@
     <h1>Deck: <%= @deck.name %></h1>
     <div id="carouselExampleIndicators" class="carousel slide" data-interval="false" data-bs-interval="false" data-bs-ride="carousel">
       <!-- PREVIOUS BUTTON -->
-      <button class="w-20 carousel-control-prev bg-gradient bg-info bg-gradient rounded-pill border border-2 border-primary" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <button class="w-20 carousel-control-prev bg-gradient bg-info bg-gradient rounded-pill border border-2 border-primary loading-disable no-loading-spinner" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
       </button>
@@ -59,7 +59,7 @@
         <% end %>
       </div>
       <!-- NEXT BUTTON -->
-      <button class="w-20 carousel-control-next bg-gradient bg-info bg-gradient rounded-pill border border-2 border-primary" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <button class="w-20 carousel-control-next bg-gradient bg-info bg-gradient rounded-pill border border-2 border-primary loading-disable no-loading-spinner" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
@@ -74,7 +74,7 @@
           <div class="input-group">
             <%= text_field_tag :guess, nil, class: "form-control", placeholder: "Answer" %>
             <div class="input-group-append d-flex">
-              <%= button_tag type: :submit, class: "btn btn-primary" do %>
+              <%= button_tag type: :submit, class: "btn btn-primary loading-disable" do %>
                 Guess
               <% end %>
             </div>
@@ -82,15 +82,15 @@
         <% end %>
       </div>
       <div class="d-flex justify-content-center">
-        <button id="flipper" style="width: 30%; min-width: 50px;" type="button" class="btn btn-info" onclick="studyCardFlip(this)">Flip</button>
+        <button id="flipper" style="width: 30%; min-width: 50px;" type="button" class="btn btn-info loading-disable" onclick="studyCardFlip(this)">Flip</button>
       </div>
       <div class="d-flex justify-content-center input-group">
-        <label for="score_corr" class="form-check-label btn btn-secondary m-1">
-          <input id="score_corr" class="" name="score" type="radio" value="Correct" onclick="scoreSelected(this)" />
+        <label for="score_corr" class="form-check-label btn btn-secondary m-1 loading-disable">
+          <input id="score_corr" class="" name="score" type="radio" value="Correct" onclick="cardResultSelected()" />
           Correct
         </label>
-        <label for="score_incorr" class="form-check-label btn btn-secondary m-1">
-          <input id="score_incorr" class="" name="score" type="radio" value="Incorrect" onclick="scoreSelected(this)" />
+        <label for="score_incorr" class="form-check-label btn btn-secondary m-1 loading-disable">
+          <input id="score_incorr" class="" name="score" type="radio" value="Incorrect" onclick="cardResultSelected()" />
           Incorrect
         </label>
       </div>

@@ -1,4 +1,4 @@
-class DecksController < ApplicationController
+class DecksController < ResourcesController
   def index
     @decks = Deck.paginate(page: params[:page], per_page: 30)
     @decks = @decks.search(params[:search]) if params[:search].present?

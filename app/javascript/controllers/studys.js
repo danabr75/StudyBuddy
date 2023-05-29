@@ -1,242 +1,213 @@
-//Verifies that we got the expected card object
+const CORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR = "#score_corr";
+const INCORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR = "#score_incorr";
+
+/**
+ * Retrieve the active study card from the DOM.
+ * @returns {Object|null} - jQuery object representing the card if found and valid, otherwise null.
+ */
 window.getVerifiedCard = function() {
-  var card = $(".study-card.active")
-  if (card == undefined) {
-    alert("Card not found.")
-    return null
+  const card = $(".study-card.active");
+  if (!card || card.length > 1) {
+    const message = !card ? "Card not found." : "Too many cards.";
+    alert(message);
+    return null;
   }
-  if (card.length != undefined && card.length > 1) {
-    alert("Too many cards.")
-    return null
-  }
+  console.log("~~~card: " + card.data('id'));
+  return card;
+};
 
-  console.log("~~~card: " + card.data('id'))
-  return card
-}
-
-// TODO: Why using function doesn't work but variable function does 
-// Flips card view (front/back)
+/**
+ * Flip the card view from front to back or back to front.
+ * @param {HTMLElement} button - Button triggering the flip.
+ * @returns {boolean} - Returns false if card is not found, otherwise true.
+ */
 window.studyCardFlip = function(button) {
-  
-  // TODO: Look into scoping w/ js (let vs var vs const)
-  var card = getVerifiedCard()
-  if (card == null){
-    return false
+  const card = getVerifiedCard();
+  if (card === null){
+    return false;
   }
+  const visible_part = card.find(".card:not(.visually-hidden)");
+  const invisible_part = card.find(".card.visually-hidden");
+  visible_part.addClass("visually-hidden");
+  invisible_part.removeClass("visually-hidden");
+  console.log('flipped');
+  return true;
+};
 
-  var visible_part = card.find(".card:not(.visually-hidden)")
-  var invisible_part = card.find(".card.visually-hidden")
-  visible_part.addClass("visually-hidden")
-  invisible_part.removeClass("visually-hidden")
-  console.log('flipped')
-  return true
-}
-
-// Records the result (Correct/Incorrect) of a card
-// Returns true, false, undefined (neither correct/incorrect was set)
-window.studyCardRecordResult = function(result) {
-  if ($("#score_corr").prop("checked") == true) {
-    return true
-  } else if ($("#score_incorr").prop("checked") == true) {
-    return false
+/**
+ * Record the result (Correct/Incorrect) of a card.
+ * @returns {boolean|undefined} - Returns true if correct, false if incorrect, otherwise undefined.
+ */
+window.studyCardRecordResult = function() {
+  if ($(CORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR).prop("checked")) {
+    return true;
+  } else if ($(INCORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR).prop("checked")) {
+    return false;
   } else {
-    return undefined
+    return undefined;
   }
-}
+};
 
-// TODO - On what element should you trigger page wide events
-window.scoreSelected = function(score_selected){
-  console.log("about to trigger score_selected event")
-  console.log(score_selected)
-  var card = getVerifiedCard()
-  var card_id = card.data('id')
-  var carousel_indicators_element = $("[data-card-id='" + card_id + "']");
+/**
+ * Colorizes the carousel indicators (horizontal bars under the cards), based on correctness.
+ * Triggers a "score_selected" event.
+ */
+window.cardResultSelected = function(){
+  const card = getVerifiedCard();
+  const card_id = card.data('id');
+  const carousel_indicators_element = $("[data-card-id='" + card_id + "']");
   
-  // RESET CSS for indicator
-  carousel_indicators_element.removeClass('bg-danger')
-  carousel_indicators_element.removeClass('bg-success')
-
-  if ($("#score_incorr").prop('checked') == true) {
-    carousel_indicators_element.addClass('bg-danger')
-  } else {
-    carousel_indicators_element.addClass('bg-success')
-  }
-
-  $( "body" ).trigger("score_selected")
-}
-
-$( document ).ready(function() {
-  $("body").on('score_selected', function () {
-    console.log("triggered score_selected event")
-    console.log(this)
-    hasAllAnswersCheck();
-  })
-});
-
-
-// Checks if all of the flashcards has a recorded answer in order to enable the submit button
-window.hasAllAnswersCheck = function() {
-    // Checks all of the form's checkboxes to see if all answers have been set.
-    // Excludes checking for the current slide because it is only triggered if a radio button has been selected, implying there is an answer for this question.
-    var currentSlide = $('div.active').index()
-    var allAnswered = true;
-    var l = $( "#card_results_form" + " input[type=checkbox]")
-    for (let i = 0; i < l.length; i++) {
-      if (i != currentSlide){
-        var answered = $( "#result_card_results_attributes_" + i + "_correct").data('has-value-been-set')
-        if (!answered) {
-          allAnswered = false;
-        }
-      }
-    }
-
-    if (allAnswered) {
-      console.log("::All Answered")
-      $( "#submitResult").prop('disabled', false)
-    } else {
-      console.log("::NOT All Answered")
-    }
-}
-
-// A $( document ).ready() block.
-$( document ).ready(function() {
-    console.log( "ready!" );
-});
-
-
-var myCarousel = document.getElementById('carouselExampleIndicators')
-
-// When the user navigates to another card, store the score values for the last card in a form.
-myCarousel.addEventListener('slide.bs.carousel', function () {
-  console.log("slide change")
-  slideFnc()
-})
-
-// When a user navigates to a new card, get the last chosen results of the current card from the
-// form if they exist and update the radio buttons.
-myCarousel.addEventListener('slid.bs.carousel', function () {
-  console.log("slid change")
-
-  // Reference to the card
-  var card = getVerifiedCard()
-  if (card == null) {
-    console.log("card is invalid")
-  }
-
-  // Reference to the card's id
-  var card_id = card.data('id')
-  console.log("cardId: " + card_id)
-
-  // Reference to the appropriate checkbox on the form for a card
-  var hidden_form_card_result = $("#cardResultForm" + card_id + " input[type=checkbox]")
+  // Reset CSS for indicator.
+  carousel_indicators_element.removeClass('bg-danger').removeClass('bg-success');
   
-  // Reference to the radio buttons
-  var correct_radio = $("#score_corr")
-  var incorrect_radio = $("#score_incorr")
+  const indicator_class = $(INCORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR).prop('checked') ? 'bg-danger' : 'bg-success';
+  carousel_indicators_element.addClass(indicator_class);
 
-  // Retrieve the last selected results of the radio buttons for the current card and set the
-  // radio buttons
-  if (hidden_form_card_result.prop("checked") == true && hidden_form_card_result.data("has-value-been-set") == "true") {
-    console.log("Form Checkbox - Checked True")
-    correct_radio.prop("checked", true)
-    incorrect_radio.prop("checked", false)
-  } else if (hidden_form_card_result.prop("checked") == false && hidden_form_card_result.data("has-value-been-set") == "true"){
-    console.log("Form Checkbox - Checked False")
-    correct_radio.prop("checked", false)
-    incorrect_radio.prop("checked", true)
-  } else {
-    console.log("Form Checkbox - Checked N/A")
-    correct_radio.prop("checked", false)
-    incorrect_radio.prop("checked", false)
+  saveCardResultToHTMLForm();
+
+  $("body").trigger("card_result_selected");
+};
+
+/**
+ * Occurs AFTER the slide
+ * Pulls data from the cardResultForm to check the corresponding correct/incorrect radio input.
+ */
+window.slidFnc = function() {
+  console.log("slid change");
+  $(".loading-disable").removeClass('loading-disabled');
+  // $(".card-result-radio").button('reset');
+  const card = getVerifiedCard();
+  if (card === null) {
+    return;
   }
-})
+  const card_id = card.data('id');
 
+  const hidden_form_card_result = $("#cardResultForm" + card_id + " input[type=checkbox]");
+  const correct_radio = $(CORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR);
+  const incorrect_radio = $(INCORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR);
+
+  if (hidden_form_card_result.prop("checked") && hidden_form_card_result.data("has-value-been-set") === "true") {
+    correct_radio.prop("checked", true);
+    incorrect_radio.prop("checked", false);
+  } else if (!hidden_form_card_result.prop("checked") && hidden_form_card_result.data("has-value-been-set") === "true"){
+    correct_radio.prop("checked", false);
+    incorrect_radio.prop("checked", true);
+  } else {
+    correct_radio.prop("checked", false);
+    incorrect_radio.prop("checked", false);
+  }
+};
+
+/**
+ * Occurs BEFORE the slide
+ * Resets the buttons/checkboxes UI
+ */
 window.slideFnc = function() {
-  $("input#guess").val('')
-
-  // Reference to the card
-  var card = getVerifiedCard()
-  if (card == null) {
-    console.log("card is invalid")
-  }
-
-  // Reference to the card's ID
-  var card_id = card.data('id')
-
-  // Reference to appropriate checkbox (of last card).
-  var hidden_form_card_result = $("#cardResultForm" + card_id + " input[type=checkbox]")
-  
-  //Gets the last radio button selection (Correct/Incorrect/Neither)
-  var cardRecordResult = studyCardRecordResult();
-  console.log(cardRecordResult)
-
-  // Writes values to form and indicates a choice has been made on checkbox.
-  if (cardRecordResult == true){
-    hidden_form_card_result.prop( "checked", true); //assign
-    hidden_form_card_result.data("has-value-been-set", "true");
-  } else if (cardRecordResult == false){
-    hidden_form_card_result.prop( "checked", false);
-    hidden_form_card_result.data("has-value-been-set", "true");
-  } else {
-    hidden_form_card_result.prop( "checked", undefined);
-  }
-
-  // Prints the results of the last card
-  if (hidden_form_card_result.prop("checked") == true) {
-    console.log("~ card_id " + card_id + " is CHECKED")
-  } else if (hidden_form_card_result.prop("checked") == false){
-    console.log("~ card_id " + card_id + " is UNCHECKED")
-  } else {
-    console.log("ERROR - Could not find correct input")
-  }
-
-  console.log("slideFnc Ran!!!")
+  console.log("slide change");
+  $(".loading-disable").addClass('loading-disabled');
+  $("input#guess").val('');
+  $(CORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR).prop("checked", false);
+  $(INCORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR).prop("checked", false);
 }
 
-$( "#card_results_form" ).submit(function( event ) {
-  // Calls slideFnc before submitting to store most recent results (radio button selections aren't
-  // submitted to the form until carousel triggers the slide event)
-  slideFnc();
+/**
+ * Saves the correct/incorrect radio selection to the hidden cardResultForm
+ */
+window.saveCardResultToHTMLForm = function() {
+  const card = getVerifiedCard();
+  if (card === null) {
+    console.log("card is invalid");
+    return;
+  }
+  const card_id = card.data('id');
+  const hidden_form_card_result = $("#cardResultForm" + card_id + " input[type=checkbox]");
+  const card_record_result = studyCardRecordResult();
 
-  // TODO - 1.) Fix Loading Bug (loading in on page works, but weird cycling lag from other pages)
-  // TODO - 2.) Prompt for unsaved data if any rerouting is attempted on study page
-  // TODO - 3.) Prompt for unsaved data if any closing is attempted on study page
+  hidden_form_card_result.prop( "checked", card_record_result !== undefined ? card_record_result : undefined);
+  hidden_form_card_result.data("has-value-been-set", card_record_result !== undefined ? "true" : "false");
 
-  //alert( "Handler for .submit() called." );
-  // event.preventDefault();
-});
+  if (hidden_form_card_result.prop("checked")) {
+    console.log("~ card_id " + card_id + " is CHECKED");
+  } else if (hidden_form_card_result.prop("checked") === false){
+    console.log("~ card_id " + card_id + " is UNCHECKED");
+  } else {
+    console.log("ERROR - Could not find correct input");
+  }
+};
 
-
+/**
+ * Handle the guess answer form submission event.
+ * Intercepts the guess_answer form, and converts it into async process.
+ * Checks the appropriate card cards 
+ */
 $(document).on('submit', '#guess_answer', function(event) {
-  event.preventDefault(); // Prevent the default form submission
-  name="card_id"
-
-  var card = getVerifiedCard()
-  var card_id = card.data('id')
-  // Update guess form with correct card ID.
-  var card_id_input = $("input[name='card_id']");
-  card_id_input.val(card_id)
-
+  event.preventDefault();
+  const card = getVerifiedCard();
+  const card_id = card.data('id');
+  $("input[name='card_id']").val(card_id);
+  
   $.ajax({
     url: '/cards/guess',
-    method: 'POST', // or 'GET' depending on your form's method
-    data: $(this).serialize(), // Serialize the form data
+    method: 'POST',
+    data: $(this).serialize(),
     success: function(response) {
-      // Handle the response from the server
-      var radio_input = undefined;
-      if (response.success == true) {
-        radio_input = $("#score_corr");
-      } else {
-        radio_input = $("#score_incorr");
-      }
-      // Both are necessary, to trigger events and to set value in HTML form
-      radio_input.prop('checked', true);
-      radio_input.click();
+      const radio_input = response.success ? $(CORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR) : $(INCORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR);
+      radio_input.prop('checked', true).click();
     },
     error: function(xhr) {
-      // Handle errors, if any
-      console.log("ERROR! /cards/guess GET failed")
-      console.log(xhr)
+      console.log("ERROR! /cards/guess GET failed");
+      console.log(xhr);
     }
   });
+});
+
+/**
+ * Check if all flashcards have recorded answers.
+ * If all flashcards have answers, trigger 'all_card_results_completed' event
+ */
+window.haveAllCardResultsBeenCompleted = function() {
+  const current_slide = $('div.active').index();
+  let all_answered = true;
+  const l = $( "#card_results_form input[type=checkbox]");
+  for (let i = 0; i < l.length; i++) {
+    if (i != current_slide){
+      const answered = $( "#result_card_results_attributes_" + i + "_correct").data('has-value-been-set');
+      if (!answered) {
+        all_answered = false;
+      }
+    }
+  }
+
+  if (all_answered) {
+    $("body").trigger("all_card_results_completed");
+  }
+}
+
+/**
+ * Triggered when all card results have been completed.
+ * Enables the results form submission button
+ */
+window.allCardResultsCompleted = function() {
+  $("#submitResult").prop('disabled', false);
+}
+
+$(document).ready(function() {
+  $("body").on('card_result_selected', function () {
+    haveAllCardResultsBeenCompleted();
+  });
+
+  $("body").on('all_card_results_completed', function () {
+    allCardResultsCompleted();
+  });
+
+  /**
+   * Handle slide and slid events of the carousel.
+   * When a user navigates to a new card, get the last chosen results of the current card from the form if they exist and update the radio buttons.
+   * When the user navigates to another card, store the score values for the last card in a form.
+   */
+  const myCarousel = document.getElementById('carouselExampleIndicators');
+
+  myCarousel.addEventListener('slide.bs.carousel', window.slideFnc);
+
+  myCarousel.addEventListener('slid.bs.carousel', window.slidFnc)
 });

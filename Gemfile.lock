@@ -71,6 +71,7 @@ GEM
     ast (2.4.2)
     autoprefixer-rails (10.4.7.0)
       execjs (~> 2)
+    bcrypt (3.1.18)
     bindex (0.8.1)
     bootsnap (1.15.0)
       msgpack (~> 1.2)
@@ -79,6 +80,7 @@ GEM
       popper_js (>= 2.11.6, < 3)
       sassc-rails (>= 2.0.0)
     builder (3.2.4)
+    cancancan (3.5.0)
     capybara (3.38.0)
       addressable
       matrix
@@ -92,6 +94,18 @@ GEM
     crass (1.0.6)
     date (3.3.3)
     debug (1.7.1)
+    devise (4.9.2)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0)
+      responders
+      warden (~> 1.2.3)
+    devise-async (1.0.0)
+      activejob (>= 5.0)
+      devise (>= 4.0)
+    devise_invitable (2.0.8)
+      actionmailer (>= 5.0)
+      devise (>= 4.6)
     elastic-transport (8.2.0)
       faraday (< 3)
       multi_json
@@ -156,6 +170,7 @@ GEM
     nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
+    orm_adapter (0.5.0)
     parallel (1.23.0)
     parser (3.2.2.1)
       ast (~> 2.4.1)
@@ -197,6 +212,9 @@ GEM
     rainbow (3.1.1)
     rake (13.0.6)
     regexp_parser (2.6.1)
+    responders (3.1.0)
+      actionpack (>= 5.2)
+      railties (>= 5.2)
     rexml (3.2.5)
     rubocop (1.51.0)
       json (~> 2.3)
@@ -249,6 +267,8 @@ GEM
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
+    warden (1.2.9)
+      rack (>= 2.0.9)
     web-console (4.2.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -276,8 +296,12 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   bootstrap (~> 5.2.2)
+  cancancan
   capybara
   debug
+  devise
+  devise-async
+  devise_invitable
   elasticsearch
   font-awesome-rails
   font-awesome-sass (~> 6.2.1)

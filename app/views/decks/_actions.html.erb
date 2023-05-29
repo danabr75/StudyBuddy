@@ -8,23 +8,29 @@
 
 <% link_dynamic_class_elements_string = link_dynamic_class_elements.join(' ') %>
 
-<div class="row">
+<div class="row deck_actions">
   <% unless controller_name == 'decks' && action_name == 'show' %>
   <div class="col">
-    <%= link_to deck, class: "bi bi-arrow-right-square-fill btn btn-success " << link_dynamic_class_elements_string do %>
+    <% local_link_classes = link_dynamic_class_elements_string.dup %>
+    <% local_link_classes << " disabled-link" unless can?(:show, deck) %>
+    <%= link_to deck, class: "bi bi-arrow-right-square-fill btn btn-success " << local_link_classes do %>
       <br/>
       <%= t('actions.show') %>
     <% end %>
   </div>
   <% end %>
   <div class="col">
-    <%= link_to edit_deck_path(deck), class: "bi bi-pencil btn btn-primary " << link_dynamic_class_elements_string do %>
+    <% local_link_classes = link_dynamic_class_elements_string.dup %>
+    <% local_link_classes << " disabled-link" unless can?(:edit, deck) %>
+    <%= link_to edit_deck_path(deck), class: "bi bi-pencil btn btn-primary " << local_link_classes do %>
       </br>
       <%= t('actions.edit') %>
     <% end %>
   </div>
   <div class="col">
-    <%= link_to deck, class: "bi bi-trash btn btn-danger " << link_dynamic_class_elements_string, data: {
+    <% local_link_classes = link_dynamic_class_elements_string.dup %>
+    <% local_link_classes << " disabled-link" unless can?(:destroy, deck) %>
+    <%= link_to deck, class: "bi bi-trash btn btn-danger " << local_link_classes, data: {
         turbo_method: :delete,
         turbo_confirm: "Are you sure?"
       } do
@@ -34,7 +40,9 @@
     <% end %>
   </div>
   <div class="col">
-    <%= link_to new_deck_result_path(deck), class: "bi bi-book-half btn btn-info " << link_dynamic_class_elements_string do %>
+    <% local_link_classes = link_dynamic_class_elements_string.dup %>
+    <% local_link_classes << " disabled-link" unless can?(:create, Result, {deck_id: deck.id}) %>
+    <%= link_to new_deck_result_path(deck), class: "bi bi-book-half btn btn-info " << local_link_classes do %>
       <br/>
       <%= t('actions.study') %>
     <% end %>

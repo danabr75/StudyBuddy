@@ -16,10 +16,53 @@
 @import "font-awesome.css";
 @import "bootstrap";
 
+.loading-disabled:not(.no-loading-spinner) {
+  position: relative;
+  pointer-events: none;
+}
+
+.loading-disabled:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(128, 128, 128, 0.5);
+  z-index: 1;
+}
+.loading-disabled:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  top: 50%;
+  left: 50%;
+  margin-top: -1rem;
+  margin-left: -1rem;
+  z-index: 2;
+  border: .25em solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #000;
+  animation: spinner 0.75s linear infinite;
+}
+.loading-disabled.no-loading-spinner:before {
+  content: none;
+}
+.loading-disabled.no-loading-spinner:after {
+  content: none;
+}
+
+@keyframes spinner {
+  to { transform: rotate(1turn); }
+}
+
+
+
 #carouselExampleIndicators, .study-card, .card, .card-body {
   min-height: 45vh;
 }
-
 
 .no-click {
   pointer-events: none;
@@ -102,4 +145,17 @@ a.logo {
 .parent-show-elements-if-hover-box:hover .child-hide-until-hover-element {
   display: block;
   opacity: 1;
+}
+
+.parent-show-elements-if-hover-box:hover .child-hide-until-hover-element.disabled-link {
+  opacity: 0.5; /* Adjust the opacity to indicate the link is disabled */
+  pointer-events: none; /* Disable pointer events on the link */
+  /* Add any other styles to visually indicate the link is disabled */
+}
+
+/* Have to be careful not to interfere with visibility on the Deck#index page */
+.disabled-link:not(.child-hide-until-hover-element) {
+  opacity: 0.5; /* Adjust the opacity to indicate the link is disabled */
+  pointer-events: none; /* Disable pointer events on the link */
+  /* Add any other styles to visually indicate the link is disabled */
 }

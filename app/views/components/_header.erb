@@ -3,4 +3,12 @@
 		<i class="bi bi-pentagon-half"></i>
 		<%= t('application.name') %>
 	<% end %>
+
+	<span class="pull-right">
+		<% if user_signed_in? %>
+		  <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+		<% else %>
+		  <%= link_to "Log In", new_user_session_path, class: "btn btn-primary" %>
+		<% end %>
+	</span>
 </div>

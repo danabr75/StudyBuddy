@@ -1,4 +1,4 @@
-class ResultsController < ApplicationController
+class ResultsController < ResourcesController
   # - Mimic updating Card in db -
   def create
     @deck = Deck.find(params[:deck_id])

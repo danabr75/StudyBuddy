@@ -1,4 +1,4 @@
-class StudysController < ApplicationController
+class StudysController < ResourcesController
   # def edit
   #   @deck = Deck.find(params[:id])
   # end

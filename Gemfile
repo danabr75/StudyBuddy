@@ -3,6 +3,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.0"
 
+gem 'cancancan'
+gem 'devise'
+gem 'devise-async'
+gem 'devise_invitable'
+
 gem 'i18n', '~> 1.13'
 
 gem "will_paginate"

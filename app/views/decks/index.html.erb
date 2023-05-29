@@ -20,7 +20,7 @@
         <% end %>
       </div>
       <div class="mx-2 pull-right">
-        <%= link_to "New Deck", new_deck_path, class: "btn btn-success pull-right" %>
+        <%= link_to t('actions.new') + ' ' + t('deck.class'), new_deck_path, class: "btn btn-success pull-right #{'disabled' unless can?(:create, Deck)}" %>
       </div>
     </div>
     <%= will_paginate @decks, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
