@@ -9,20 +9,25 @@
 <% link_dynamic_class_elements_string = link_dynamic_class_elements.join(' ') %>
 
 <div class="row deck_actions">
-  <% unless controller_name == 'decks' && action_name == 'show' %>
   <div class="col">
-    <% local_link_classes = link_dynamic_class_elements_string.dup %>
-    <% local_link_classes << " disabled-link" unless can?(:show, deck) %>
-    <%= link_to deck, class: "bi bi-arrow-right-square-fill btn btn-success " << local_link_classes do %>
-      <br/>
-      <%= t('actions.show') %>
-    <% end %>
+    <button class="btn btn-secondary btn-no-hover no-click h-100">
+      <%= t('deck.card_count') %>: <%= deck.cards.count %>
+    </button>
   </div>
+  <% unless controller_name == 'decks' && action_name == 'show' %>
+    <div class="col">
+      <% local_link_classes = link_dynamic_class_elements_string.dup %>
+      <% local_link_classes << " disabled-link" unless can?(:show, deck) %>
+      <%= link_to deck, class: "bi bi-arrow-right-square-fill btn btn-success h-100 " << local_link_classes do %>
+        <br/>
+        <%= t('actions.show') %>
+      <% end %>
+    </div>
   <% end %>
   <div class="col">
     <% local_link_classes = link_dynamic_class_elements_string.dup %>
     <% local_link_classes << " disabled-link" unless can?(:edit, deck) %>
-    <%= link_to edit_deck_path(deck), class: "bi bi-pencil btn btn-primary " << local_link_classes do %>
+    <%= link_to edit_deck_path(deck), class: "bi bi-pencil btn btn-primary h-100 " << local_link_classes do %>
       </br>
       <%= t('actions.edit') %>
     <% end %>
@@ -30,7 +35,7 @@
   <div class="col">
     <% local_link_classes = link_dynamic_class_elements_string.dup %>
     <% local_link_classes << " disabled-link" unless can?(:destroy, deck) %>
-    <%= link_to deck, class: "bi bi-trash btn btn-danger " << local_link_classes, data: {
+    <%= link_to deck, class: "bi bi-trash btn btn-danger h-100 " << local_link_classes, data: {
         turbo_method: :delete,
         turbo_confirm: "Are you sure?"
       } do
@@ -42,7 +47,7 @@
   <div class="col">
     <% local_link_classes = link_dynamic_class_elements_string.dup %>
     <% local_link_classes << " disabled-link" unless can?(:create, Result, {deck_id: deck.id}) %>
-    <%= link_to new_deck_result_path(deck), class: "bi bi-book-half btn btn-info " << local_link_classes do %>
+    <%= link_to new_deck_result_path(deck), class: "bi bi-book-half btn btn-info h-100 " << local_link_classes do %>
       <br/>
       <%= t('actions.study') %>
     <% end %>

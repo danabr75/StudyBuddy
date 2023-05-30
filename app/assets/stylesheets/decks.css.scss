@@ -2,3 +2,19 @@
   /* necessary so there's no jossle when action buttons appear */
   min-height: 70px;
 }
+
+.parent-show-elements-if-hover-box.active .child-hide-until-hover-element {
+  display: block;
+  opacity: 1;
+}
+
+.deck-row.parent-show-elements-if-hover-box  {
+  border: 2px solid transparent;
+  border-radius: 8px;
+}
+
+.deck-row.parent-show-elements-if-hover-box.active  {
+  border: 2px solid #53b5ff;
+  border-radius: 8px;
+  background: linear-gradient(#a6c8ff, #17ff008f, #a6c8ff);
+}

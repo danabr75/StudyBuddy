@@ -49,6 +49,7 @@ en:
   deck:
     class: Deck
     name: Name
+    card_count: 'Card #'
   card:
     class: Card
     front: FRONT

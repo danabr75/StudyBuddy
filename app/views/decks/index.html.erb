@@ -13,7 +13,7 @@
                 <i class="bi bi-search loading-disable"></i>
               <% end %>
               <div class="input-group-append">
-                <%= link_to 'x', decks_path, class: "btn btn-danger", data: { turbo_frame: 'deck_index_and_search' }, onclick: "$('#search').val('')" %>
+                <%= link_to 'x', decks_path, class: "btn btn-danger", data: { turbo_frame: 'deck_index_and_search' }, onclick: "$('#search').val('');" %>
               </div>
             </div>
           </div>
@@ -28,7 +28,7 @@
       <table class="table table-striped">
         <tbody id="deck" data-controller="decks">
           <% @decks.each do |deck| %>
-            <tr class="deck-row row parent-show-elements-if-hover-box" style="">
+            <tr class="deck-row row parent-show-elements-if-hover-box">
               <td class="col">
                 <%= render deck %>
               </td>
