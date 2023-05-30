@@ -1,11 +1,12 @@
 class ResultsController < ResourcesController
   before_action :authenticate_user!, except: %w[new create]
-  # - Mimic updating Card in db -
+
   def create
     @deck = Deck.find(params[:deck_id])
     if current_user.nil?
       @result = @deck.results.new(result_params)
-      redirect_to deck_path(@deck), alert: "Only registered user can save results, but you got #{@result.to_h}" and return
+      msg = t('deck.results_for_non_registered_users', percent_correct: @result.to_h)
+      redirect_to deck_path(@deck), alert: msg and return
     end
 
     @result = @deck.results.new(result_params)
@@ -14,18 +15,15 @@ class ResultsController < ResourcesController
     redirect_to deck_path(@deck)
   end
 
-  # - Display from Studys Ex - Not updating db -
   def new
     @deck = Deck.find(params[:deck_id])
-    if @deck.cards.count == 0
+    if @deck.cards.none?
       redirect_to deck_path(@deck), alert: "No cards within deck to study!" and return
     end
     @cards = @deck.cards.order("RANDOM()")
-    # @result = @deck.results.find(params[:id])
   end
 
   def update
-    # - Mimic cards update -
     @deck = Deck.find(params[:deck_id])
     @result = @deck.results.find(params[:id])
 
@@ -34,19 +32,7 @@ class ResultsController < ResourcesController
     else
       render :edit, status: :unprocessable_entity
     end
-
-    # # - Mimic decks update -
-    # @deck = Deck.find(params[:id])
-
-    # if @deck.update(deck_params)
-    #   redirect_to @deck
-    # else
-    #   render :edit, status: :unprocessable_entity
-    # end
   end
-
-  # def index
-  # end
 
   def destroy
     @deck = Deck.find(params[:deck_id])
@@ -55,11 +41,9 @@ class ResultsController < ResourcesController
     redirect_to deck_path(@deck), status: :see_other
   end
 
-  # TODO: - Fix
   private
 
   def result_params
-    # params.require(:person).permit(:name, :age, pets_attributes: [ :id, :name, :category ])
     params.require(:result).permit(:deck_id, card_results_attributes: %i[card_id correct])
   end
 end

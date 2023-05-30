@@ -60,6 +60,7 @@ en:
     total_average: Total Average
     average: Average
     last_8_results: Last 8 Results
+    results_for_non_registered_users: "Only registered user can save results, but you got %{percent_correct} correct!"
   card:
     class: Card
     front: FRONT

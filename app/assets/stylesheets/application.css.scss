@@ -16,6 +16,11 @@
 @import "font-awesome.css";
 @import "bootstrap";
 
+/* Necessary so that hidden inputs cannot be 'tabbed' into */
+.visually-hidden {
+  display: none;
+}
+
 #pinnedToScreenAlertContainer {
   position: fixed;
   top: 90px;
