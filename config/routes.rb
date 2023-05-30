@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root "decks#index"
+  
+  devise_for :users
+  get 'profile', to: 'profiles#edit'
+  patch 'profile', to: 'profiles#update'
+
   resources :decks do
     resources :cards
     resources :results do

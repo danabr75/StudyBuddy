@@ -30,10 +30,13 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  profile:
+    password_updated: Password updated successfully.
   nav:
     log_in: Log In
     log_out: Log Out
     source_code: Source Code
+    profile: Profile
   application:
     name: StudyBuddy
   actions:
