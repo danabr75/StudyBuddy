@@ -1,4 +1,6 @@
 class CardsController < ResourcesController
+  before_action :authenticate_user!, except: %w[guess]
+
   def new
     @deck = Deck.accessible_by(current_ability).find(params[:deck_id])
     @card = @deck.cards.new

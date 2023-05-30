@@ -1,4 +1,5 @@
 class DecksController < ResourcesController
+  before_action :authenticate_user!, except: %w[index show]
   respond_to :html, :turbo_stream
 
   # def index
@@ -32,7 +33,10 @@ class DecksController < ResourcesController
     @deck = Deck.find(params[:id])
     @cards = @deck.cards.search(params[:card_search])
     @cards = @cards.paginate(page: params[:page], per_page: 3)
-    @results = @deck.results
+    @results = Result.none
+    if current_user
+      @results = @deck.results.where(user_id: current_user.id)
+    end
     # @previous_results = @deck.results.where(user_id: @current_user&.id)
   end
 

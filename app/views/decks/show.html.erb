@@ -13,11 +13,11 @@
     </div>
 
     <h4>
-      Total Average: <%= @deck.results.card_result_average %>
+      <%= t("deck.total_average") %>: <%= @results.card_result_average %>
     </h4>
 
 
-    <h4>Last 8 results: (8's average: <%= @results.last_8.card_result_average %>)</h4>
+    <h4><%= t("deck.last_8_results") %>: (<%= t("deck.average") %>: <%= @results.last_8.card_result_average %>)</h4>
     <ul>
     <% @results.last_8.created_at_asc.each_with_index do |result, index| %>
       <li><%= index + 1 %>: <%= result.to_h %> Correct</li>

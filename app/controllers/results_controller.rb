@@ -1,8 +1,16 @@
 class ResultsController < ResourcesController
+  before_action :authenticate_user!, except: %w[new create]
   # - Mimic updating Card in db -
   def create
     @deck = Deck.find(params[:deck_id])
-    @result = @deck.results.create(result_params)
+    if current_user.nil?
+      @result = @deck.results.new(result_params)
+      redirect_to deck_path(@deck), alert: "Only registered user can save results, but you got #{@result.to_h}" and return
+    end
+
+    @result = @deck.results.new(result_params)
+    @result.user_id = current_user.id
+    @result.save!
     redirect_to deck_path(@deck)
   end
 

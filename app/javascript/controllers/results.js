@@ -24,11 +24,11 @@ window.studyCardFlip = function() {
   $('.flipper').toggleClass('flipped');
   // .card-front will have 'flipped-over' class if no longer 'on top'
   // - will let us know to reset it before we carousel-navigate elsewhere.
-  $('.card-front').toggleClass('flipped-over');
+  $('.carousel-item.active .card-front').toggleClass('flipped-over');
   console.log('flipped');
 };
 window.resetCardFlip = function() {
-  if ($('.card-front').hasClass('flipped-over')) {
+  if ($('.carousel-item.active .card-front').hasClass('flipped-over')) {
     // console.log("Card was flipped, resetting")
     studyCardFlip();
   }
@@ -74,6 +74,8 @@ window.cardResultSelected = function(){
  */
 window.slidFnc = function() {
   console.log("slid change");
+  // Trying to reset here as a safety, sometimes the caurosel doesn't clear it in time.
+  resetCardFlip();
   $(".loading-disable").removeClass('loading-disabled');
   // $(".card-result-radio").button('reset');
   const card = getVerifiedCard();
@@ -201,6 +203,7 @@ window.haveAllCardResultsBeenCompleted = function() {
  * Enables the results form submission button
  */
 window.allCardResultsCompleted = function() {
+  createAlert('success', 'All answers completed, you can now submit your results');
   $("#submitResult").prop('disabled', false);
 }
 
