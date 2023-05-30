@@ -1,6 +1,9 @@
 <%= turbo_frame_tag 'flash' do %>
   <div id="alertContainer">
     <% flash.each do |type, message| %>
+      <!-- Devise flashes a weird 'true' message on session timeout. Inexplicable. -->
+      <!-- - src: https://stackoverflow.com/questions/27538622/message-true-flashes-on-main-page-after-session-timeout -->
+      <% next if type.to_s == 'timedout' %>
       <div class="alert alert-<%= bootstrap_class_for(type) %> alert-dismissible fade show" role="alert">
         <%= message %>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
