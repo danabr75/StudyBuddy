@@ -7,7 +7,7 @@ class Card < ApplicationRecord
     # TODO - figure out why it won't work w/o the .where({})
     query = self.where({})
     if text
-      query.where("header LIKE ?", "%#{text}%").or(query.where("lines LIKE ?", "%#{text}%")).or(query.where("blank LIKE ?", "%#{text}%"))
+      query.where("header ILIKE ?", "%#{text}%").or(query.where("lines ILIKE ?", "%#{text}%")).or(query.where("blank ILIKE ?", "%#{text}%"))
     else
       query
     end

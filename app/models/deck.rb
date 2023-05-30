@@ -20,7 +20,7 @@ class Deck < ApplicationRecord
     # TODO - figure out why it won't work w/o the .where({})
     query = self.where({})
     if text
-      query.where("name LIKE ?", "%#{text}%")
+      query.where("name ILIKE ?", "%#{text}%")
     else
       query
     end
