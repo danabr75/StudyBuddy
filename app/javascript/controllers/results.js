@@ -134,7 +134,8 @@ window.populateGuessFormWithCardResultForm = function() {
   }
 
   if (hidden_form_card_result.data("has-value-been-set") === "true") {
-    $("body").trigger("card_result_selected");
+    // Already filled out, re-enable the next button
+    enableNextButton();
   }
 };
 
