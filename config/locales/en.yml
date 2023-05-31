@@ -74,6 +74,7 @@ en:
   result:
     action:
       guess: Guess
+      next: Next
     guess_placeholder_suffix_singular: ' Word'
     guess_placeholder_suffix_plural: ' Words'
 

@@ -34,6 +34,18 @@ window.resetCardFlip = function() {
     studyCardFlip();
   }
 };
+/**
+ * Disable the 'next' button, next to the guess button, until an answer has been selected
+ */
+window.disableNextButton = function() {
+  $('#next').attr('disabled', 'disabled');
+};
+/**
+ * Enable the 'next' button, next to the guess button, when an answer has been selected
+ */
+window.enableNextButton = function() {
+  $('#next').removeAttr('disabled');
+};
 
 /**
  * Record the result (Correct/Incorrect) of a card.
@@ -69,6 +81,10 @@ window.cardResultSelected = function(){
   $("body").trigger("card_result_selected");
 };
 
+window.setFocusToGuessInput = function(){
+  $('#guess').focus();
+}
+
 /**
  * Pulls the word count from the active card and replaces the placeholder in the guess input
  */
@@ -88,11 +104,9 @@ window.clearGuessInputPlaceHolder = function() {
 }
 
 /**
- * Occurs AFTER the slide
  * Pulls data from the cardResultForm to check the corresponding correct/incorrect radio input.
  */
-window.slidFnc = function() {
-  setGuessInputPlaceHolder()
+window.populateGuessFormWithCardResultForm = function() {
   console.log("slid change");
   // Trying to reset here as a safety, sometimes the caurosel doesn't clear it in time.
   resetCardFlip();
@@ -118,20 +132,21 @@ window.slidFnc = function() {
     correct_radio.prop("checked", false);
     incorrect_radio.prop("checked", false);
   }
+
+  if (hidden_form_card_result.data("has-value-been-set") === "true") {
+    $("body").trigger("card_result_selected");
+  }
 };
 
 /**
  * Occurs BEFORE the slide
  * Resets the buttons/checkboxes UI
  */
-window.slideFnc = function() {
-  clearGuessInputPlaceHolder();
-  console.log("slide change");
+window.resetGuessForm = function() {
   $(".loading-disable").addClass('loading-disabled');
   $("input#guess").val('');
   $(CORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR).prop("checked", false);
   $(INCORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR).prop("checked", false);
-  resetCardFlip();
 }
 
 /**
@@ -179,10 +194,8 @@ $(document).on('submit', '#guess_answer', function(event) {
       const radio_input = response.success ? $(CORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR) : $(INCORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR);
       if (response.success) {
         createAlert('success', 'Correct!');
-        console.log('Correct!');
       } else {
         createAlert('danger', 'Incorrect!');
-        console.log('Incorrect!');
       }
       radio_input.prop('checked', true).click();
     },
@@ -223,8 +236,11 @@ window.haveAllCardResultsBeenCompleted = function() {
  * Triggered when all card results have been completed.
  * Enables the results form submission button
  */
-window.allCardResultsCompleted = function() {
+window.allCardResultsCompletedAlert = function() {
   createAlert('success', 'All answers completed, you can now submit your results');
+}
+
+window.enableCardResultsSubmit = function() {
   $("#submitResult").prop('disabled', false);
 }
 
@@ -232,11 +248,13 @@ $(document).ready(function() {
   setGuessInputPlaceHolder();
 
   $("body").on('card_result_selected', function () {
+    enableNextButton();
     haveAllCardResultsBeenCompleted();
   });
 
   $("body").on('all_card_results_completed', function () {
-    allCardResultsCompleted();
+    allCardResultsCompletedAlert();
+    enableCardResultsSubmit();
   });
 
   /**
@@ -246,7 +264,17 @@ $(document).ready(function() {
    */
   const myCarousel = document.getElementById('carouselExampleIndicators');
 
-  myCarousel.addEventListener('slide.bs.carousel', window.slideFnc);
+  // slide.bs.carousel occurs BEFORE the slide
+  myCarousel.addEventListener('slide.bs.carousel', window.resetGuessForm);
+  myCarousel.addEventListener('slide.bs.carousel', window.clearGuessInputPlaceHolder);
+  myCarousel.addEventListener('slide.bs.carousel', window.disableNextButton);
+  myCarousel.addEventListener('slide.bs.carousel', window.resetCardFlip);
+  myCarousel.addEventListener('slide.bs.carousel', window.clearGuessInputPlaceHolder);
 
-  myCarousel.addEventListener('slid.bs.carousel', window.slidFnc)
+  // slid.bs.carousel occurs AFTER the slide
+  myCarousel.addEventListener('slid.bs.carousel', window.populateGuessFormWithCardResultForm)
+  myCarousel.addEventListener('slid.bs.carousel', window.setGuessInputPlaceHolder)
+  myCarousel.addEventListener('slid.bs.carousel', window.resetCardFlip)
+  myCarousel.addEventListener('slid.bs.carousel', window.setFocusToGuessInput)
+
 });

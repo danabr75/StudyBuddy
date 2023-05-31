@@ -85,6 +85,7 @@
               <%= button_tag type: :submit, class: "btn btn-primary loading-disable" do %>
                 <%= t('result.action.guess') %>
               <% end %>
+              <%= button_tag t('result.action.next'), type: 'button', id: 'next', class: "btn btn-success loading-disable", onclick: "$('button[data-bs-slide=\\'next\\']').click();", disabled: true %>
             </div>
           </div>
         <% end %>
