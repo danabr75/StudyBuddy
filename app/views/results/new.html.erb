@@ -1,3 +1,9 @@
+<!-- store necessary translations in html for JS to pick up -->
+<% content_for :translations do %>
+  <%= hidden_field_tag 'translations[guess_placeholder_suffix_singular]', t('result.guess_placeholder_suffix_singular') %>
+  <%= hidden_field_tag 'translations[guess_placeholder_suffix_plural]', t('result.guess_placeholder_suffix_plural') %>
+<% end %>
+
 <%= javascript_import_module_tag "controllers/results" %>
 <div class="study_body">
   <div class="container">
@@ -32,6 +38,7 @@
               <%= index.zero? ? 'active' : '' %>
             "
             data-id="<%= card.id %>"
+            data-word-count="<%= card.count_words_in_blank %>"
           >
             <!-- front of card -->
             <div class="card card-front">
@@ -73,10 +80,10 @@
         <%= form_tag cards_guess_path, method: :post, class: "form-inline my-4", id: "guess_answer" do %>
           <%= hidden_field_tag :card_id, "undefined" %>
           <div class="input-group">
-            <%= text_field_tag :guess, nil, class: "form-control", placeholder: "Answer" %>
+            <%= text_field_tag :guess, nil, class: "form-control", placeholder: "" %>
             <div class="input-group-append d-flex">
               <%= button_tag type: :submit, class: "btn btn-primary loading-disable" do %>
-                Guess
+                <%= t('result.action.guess') %>
               <% end %>
             </div>
           </div>

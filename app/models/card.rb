@@ -2,6 +2,11 @@ class Card < ApplicationRecord
   belongs_to :deck
   has_many :card_results, dependent: :destroy
 
+  def count_words_in_blank
+    words = blank&.split(/\s+/)
+    words&.count || 0
+  end
+
   def self.search(text)
     # Converts Card class to ActiveRecord_Relation, in case it isn't already
     # TODO - figure out why it won't work w/o the .where({})

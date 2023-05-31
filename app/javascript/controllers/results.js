@@ -1,3 +1,4 @@
+// TODO: figure out why jquery had to be imported here, not importing in proper order from other application.js file w/ imports
 const CORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR = "#score_corr";
 const INCORRECT_CARD_RESULT_RADIO_INPUT_SELECTOR = "#score_incorr";
 
@@ -12,7 +13,7 @@ window.getVerifiedCard = function() {
     alert(message);
     return null;
   }
-  console.log("~~~card: " + card.data('id'));
+  // console.log("~~~card: " + card.data('id'));
   return card;
 };
 
@@ -69,10 +70,29 @@ window.cardResultSelected = function(){
 };
 
 /**
+ * Pulls the word count from the active card and replaces the placeholder in the guess input
+ */
+window.setGuessInputPlaceHolder = function() {
+  const card = getVerifiedCard();
+  const word_count = card.data('word-count');
+  var translations_placeholder_suffix;
+  if (parseInt(word_count) === 1) {
+    translations_placeholder_suffix = $('#translations_guess_placeholder_suffix_singular').val();
+  } else {
+    translations_placeholder_suffix = $('#translations_guess_placeholder_suffix_plural').val();
+  }
+  $('#guess').attr('placeholder', word_count + translations_placeholder_suffix);
+}
+window.clearGuessInputPlaceHolder = function() {
+  $('#guess').attr('placeholder', '');
+}
+
+/**
  * Occurs AFTER the slide
  * Pulls data from the cardResultForm to check the corresponding correct/incorrect radio input.
  */
 window.slidFnc = function() {
+  setGuessInputPlaceHolder()
   console.log("slid change");
   // Trying to reset here as a safety, sometimes the caurosel doesn't clear it in time.
   resetCardFlip();
@@ -105,6 +125,7 @@ window.slidFnc = function() {
  * Resets the buttons/checkboxes UI
  */
 window.slideFnc = function() {
+  clearGuessInputPlaceHolder();
   console.log("slide change");
   $(".loading-disable").addClass('loading-disabled');
   $("input#guess").val('');
@@ -208,6 +229,8 @@ window.allCardResultsCompleted = function() {
 }
 
 $(document).ready(function() {
+  setGuessInputPlaceHolder();
+
   $("body").on('card_result_selected', function () {
     haveAllCardResultsBeenCompleted();
   });

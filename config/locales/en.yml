@@ -71,4 +71,9 @@ en:
     lines_placeholder: text for the lined side of a card
     blank: Blank
     blank_placeholder: text for the blank side of a card
+  result:
+    action:
+      guess: Guess
+    guess_placeholder_suffix_singular: ' Word'
+    guess_placeholder_suffix_plural: ' Words'
 
