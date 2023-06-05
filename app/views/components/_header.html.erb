@@ -1,33 +1,36 @@
 <%= turbo_frame_tag 'navbar' do %>
-  <div id="header" class="navbar-animation">
-    <%= link_to root_path, class: "logo" do %>
+  <nav id="header" class="navbar-animation navbar navbar-expand-lg navbar-light bg-light">
+    <%= link_to root_path, class: "logo navbar-brand" do %>
       <i class="bi bi-pentagon-half"></i>
       <%= t('application.name') %>
     <% end %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <span class="pull-right">
-      <ul class="list-inline">
+    <div class=" collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="list-inline navbar-nav">
         <% if ENV["SOURCE_CODE_URL"].present? %>
-          <li class="list-inline-item">
-            <%= link_to ENV["SOURCE_CODE_URL"], target: '_blank', class: "btn btn-light" do %>
+          <li class="list-inline-item nav-item">
+            <%= link_to ENV["SOURCE_CODE_URL"], target: '_blank', class: "btn btn-light nav-link" do %>
               <i class="bi bi-laptop"></i>
               <%= t("nav.source_code") %>
             <% end %>
           </li>
         <% end %>
         <% if user_signed_in? %>
-          <li class="list-inline-item">
-            <%= link_to t("nav.profile"), profile_path, class: "btn btn-light" %>
+          <li class="list-inline-item nav-item">
+            <%= link_to t("nav.profile"), profile_path, class: "btn btn-light nav-link" %>
           </li>
-          <li class="list-inline-item">
-            <%= link_to t("nav.log_out"), destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+          <li class="list-inline-item nav-item">
+            <%= link_to t("nav.log_out"), destroy_user_session_path, method: :delete, class: "btn btn-danger nav-link" %>
           </li>
         <% else %>
-          <li class="list-inline-item">
-            <%= link_to t("nav.log_in"), new_user_session_path, class: "btn btn-light" %>
+          <li class="list-inline-item nav-item">
+            <%= link_to t("nav.log_in"), new_user_session_path, class: "btn btn-light nav-link" %>
           </li>
         <% end %>
       </ul>
-    </span>
-  </div>
+    </div>
+  </nav>
 <% end %>
