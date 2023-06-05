@@ -81,8 +81,14 @@ window.cardResultSelected = function(){
   $("body").trigger("card_result_selected");
 };
 
+/**
+ * Only execute if on non-mobile.
+ * If on mobile, then the keyboard that pops up will obscure the card text
+ */
 window.setFocusToGuessInput = function(){
-  $('#guess').focus();
+  if (!navigator.userAgent.match(/Mobile/)) {
+    $('#guess').focus();
+  }
 }
 
 /**
@@ -277,5 +283,7 @@ $(document).ready(function() {
   myCarousel.addEventListener('slid.bs.carousel', window.setGuessInputPlaceHolder)
   myCarousel.addEventListener('slid.bs.carousel', window.resetCardFlip)
   myCarousel.addEventListener('slid.bs.carousel', window.setFocusToGuessInput)
+  // Start the page with focus on the guess input
+  window.setFocusToGuessInput()
 
 });
